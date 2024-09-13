@@ -1,0 +1,8 @@
+{
+    "watch": ["controllers", "models", "routes", "index.ts", "prisma"],
+    "ignore": ["node_modules"],
+    "execMap": {
+        "ts": "ts-node"
+    },
+    "exec": "ts-node ./index.ts"
+}
