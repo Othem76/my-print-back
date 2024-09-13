@@ -6,7 +6,6 @@ const { user: User } = prisma;
 async function main() {
   const theoPassword = await bcrypt.hash("theo", 10);
   const enzoPassword = await bcrypt.hash("enzo", 10);
-  const clementPassword = await bcrypt.hash("clement", 10);
   const maximePassword = await bcrypt.hash("maxime", 10);
 
   console.log("Début du seed...");
@@ -20,14 +19,7 @@ async function main() {
     data: {
       email: "theo.mouisse@gmail.com",
       password: theoPassword,
-      role: 'ADMIN',
-    },
-  });
-  await User.create({
-    data: {
-      email: "clement.mabile@gmail.com",
-      password: clementPassword,
-      role: 'ADMIN',
+      role: "ADMIN",
     },
   });
 
