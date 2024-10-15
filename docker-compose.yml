@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  myPrint-DB:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: admin   
+      POSTGRES_PASSWORD: azerty123
+      POSTGRES_DB: myPrint  
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      my_custom_network:
+        ipv4_address: 172.16.238.10  # IP statique
+
+networks:
+  my_custom_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.238.0/24  # Plage d'adresses IP
+
+volumes:
+  postgres:
