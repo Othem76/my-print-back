@@ -31,9 +31,9 @@ DB_DATABASE=myPrint
 
 ```bash
 $ npm install
-$ npm migrate // une fois le docker opérationnel
-$ npm initDB // insére des utilisateurs dans la base
-$ npm start
+$ npm run migrate // une fois le docker opérationnel
+$ npm run initDB // insére des utilisateurs dans la base
+$ npm run start
 ```
 
 ## Information API
