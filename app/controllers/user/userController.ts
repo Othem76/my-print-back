@@ -4,7 +4,6 @@ import UserService from "#services/userService";
 import CreateUserPayload from "#models/user/createUserPayload";
 import UpdateUserPayload from "#models/user/updateUserPayload";
 
-
 @inject()
 export default class UserController {
   constructor(private userService: UserService) {}
@@ -18,6 +17,10 @@ export default class UserController {
 
     if (!payload.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
       return response.badRequest({ message: "Invalid email format" });
+    }
+
+    if (await this.userService.getUserByEmail(payload.email)) {
+      return response.badRequest({ message: "Email is already in use" });
     }
 
     if (!payload.password || payload.password.length < 8) {
@@ -119,5 +122,4 @@ export default class UserController {
       });
     }
   }
-
 }
