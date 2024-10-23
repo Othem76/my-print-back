@@ -1,10 +1,11 @@
-# Pour lancer le projet executer ces commandes:
+# Pour lancer le projet executez ces actions:
 
-## Lancer la base postgresSQL avec Docker
+### Crée le .ENV
 
-- IP du docker:
-  - local: localhost
-  - distant: 172.16.238.10
+- Copier le fichier .env.example
+- Coller dans un fichier .env
+
+### Lancer les dockers
 
 ```bash
 $ docker-compose up -d
@@ -20,23 +21,7 @@ DB_PASSWORD=azerty123
 DB_DATABASE=myPrint
 ```
 
-## Lancement de l'API
-
-### Crée le .ENV
-
-- Copier le fichier .env.example
-- Coller dans un fichier .env
-
-### Commandes
-
-```bash
-$ npm install
-$ npm run migrate // une fois le docker opérationnel
-$ npm run initDB // insére des utilisateurs dans la base
-$ npm run start
-```
-
-## Information API
+### Information API
 
 - Port de l'API: 3333
 
