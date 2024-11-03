@@ -10,5 +10,8 @@ router.delete("users/:id", [UserController, "delete"]);
 const StlController = () => import("#controllers/stl/stlController");
 const UserController = () => import("#controllers/user/userController");
 
-router.post('uploadOne', [StlController, 'uploadOne'])
-router.post('uploadMany', [StlController, 'uploadMany'])
+router.post("uploadOne", [StlController, "uploadOne"]);
+router.post("uploadMany", [StlController, "uploadMany"]);
+
+const CostController = () => import("#controllers/cost/costController");
+router.post("getCosts", [CostController]);
