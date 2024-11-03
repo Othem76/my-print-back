@@ -44,3 +44,14 @@ PATCH /updateUser, le body:
 
 DELETE /deleteUser/:id (exemple: "localhost:3333/1")
 ```
+
+### Route Costs
+
+```
+POST /getCosts , le body:
+    - material: TPU92,
+    - weight: 450,
+    - cleaningTime: 1,
+    - impressingTime: 12,
+    - power: 70
+```
