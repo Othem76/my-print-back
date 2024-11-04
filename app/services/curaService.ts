@@ -18,9 +18,7 @@ export default class CuraService {
 
     const cura = new CuraWASM({
       definition: resolveDefinition(machine as keyof typeof printers),
-
       overrides: DefaultCuraSettings,
-
       transfer: true,
       verbose: false,
     });

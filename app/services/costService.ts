@@ -1,3 +1,10 @@
+import CuraService from "#services/curaService.js";
+import {Cost, PrintSetting} from "#models/cost/dto/postCostPayload.js";
+import * as fs from "node:fs";
+import app from "@adonisjs/core/services/app";
+import {FILE_UPLOAD_DIRECTORY} from "../utils/consts.js";
+import {sum} from "../utils/utils.js";
+
 export default class CostService {
   // TODO: a mettre en base de données
   materialPrices: { [key: string]: number } = {
@@ -54,5 +61,36 @@ export default class CostService {
     electricityCost: number
   ) {
     return materialCost + cleaningCost + electricityCost;
+  }
+
+  async getCosts(filename: string, settings: PrintSetting): Promise<Cost> {
+    const curaService = new CuraService()
+    const fileBuffer = fs.readFileSync(app.makePath(`${FILE_UPLOAD_DIRECTORY}/${filename}`))
+
+    const results = await curaService.slice(settings.printer, fileBuffer)
+
+    const materialCost = this.getMaterialCost(
+      settings.material,
+      results.filamentUsage
+    );
+
+    const cleaningCost = this.getCleaningCost(400); //TODO
+    const electricityCost = this.getElectricityCost(
+      results.printTime,
+      300 //TODO
+    );
+
+    const totalCost = this.getTotalCost(
+      materialCost,
+      cleaningCost,
+      electricityCost
+    );
+
+    return {
+      materialCost,
+      cleaningCost,
+      electricityCost,
+      totalCost
+    }
   }
 }

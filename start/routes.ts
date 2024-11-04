@@ -14,4 +14,4 @@ router.delete("users/:id", [UserController, "delete"]);
 router.post("uploadOne", [StlController, "uploadOne"]);
 router.post("uploadMany", [StlController, "uploadMany"]);
 
-router.post("getCosts", [CostController]);
+router.post("costs", [CostController]);

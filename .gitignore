@@ -2,7 +2,7 @@
 node_modules
 build
 tmp
-
+storage
 # Secrets
 .env
 .env.local
@@ -24,3 +24,5 @@ yarn-error.log
 # Platform specific
 .DS_Store
 nodemon.json
+*.js
+*.js.map

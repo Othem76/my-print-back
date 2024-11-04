@@ -1,11 +1,12 @@
 import { HttpContext } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
 import { cuid } from '@adonisjs/core/helpers'
+import MultipartFile from '@adonisjs/bodyparser'
 
 export default class StlController {
-  
+
   async uploadOne({ request, response }: HttpContext) {
-    const file = request.file('stlFile')
+    const file: MultipartFile = request.file('stlFile')
 
     if (!file) {
       return response.status(400).send({
@@ -16,7 +17,7 @@ export default class StlController {
         ]
       })
     }
-    
+
     // Type verification
     if (file.extname && file.extname !== 'stl') {
       return response.status(400).send({
@@ -48,7 +49,7 @@ export default class StlController {
   }
 
   async uploadMany({ request, response }: HttpContext) {
-    const files = request.files('stlFiles', {
+    const files: MultipartFile[] = request.files('stlFiles', {
       extnames: ['stl'],
     })
 
@@ -89,11 +90,15 @@ export default class StlController {
 
     // Files storage
     for (let file of files) {
-      file.move(app.makePath('storage/uploads'), {
+      await file.move(app.makePath('storage/uploads'), {
         name: `${cuid()}.stl`
       })
     }
 
+    return response.ok({ message: 'Tout les fichiers uploadés avec succès.' })
+  }
+
+  async clearFiles({ request, response }: HttpContext) {
     return response.ok({ message: 'Tout les fichiers uploadés avec succès.' })
   }
 

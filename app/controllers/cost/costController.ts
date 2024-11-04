@@ -1,60 +1,50 @@
-import PostCostPayload from "#models/cost/dto/postCostPayload";
+import {PostCostPayload} from "#models/cost/dto/postCostPayload";
 import CostService from "#services/costService";
 import { HttpContext } from "@adonisjs/core/http";
+import CuraService from "#services/curaService.js";
+import {existsSync} from "node:fs";
+import app from "@adonisjs/core/services/app";
+import {FILE_UPLOAD_DIRECTORY} from "../../utils/consts.js";
 
 export default class CostController {
   handle({ request, response }): Promise<HttpContext> {
     const payload: PostCostPayload = request.only([
       "material",
-      "weight",
-      "cleaningTime",
-      "impressingTime",
-      "power",
+      "printer",
+      "support",
+      "density"
     ]);
+
     // TODO : list material
     if (!payload.material) {
       return response.badRequest({ message: "Insert a material" });
     }
 
-    if (!payload.weight || payload.weight <= 0) {
-      return response.badRequest({ message: "Invalid volume" });
+    if (!payload.printer ) { //TODO get printer by name
+      return response.badRequest({ message: "Invalid printer" });
     }
 
-    if (
-      !payload.cleaningTime ||
-      payload.cleaningTime <= 0 ||
-      !payload.impressingTime ||
-      payload.impressingTime <= 0
-    ) {
-      return response.badRequest({ message: "Invalid time" });
-    }
-
-    if (!payload.power || payload.power <= 0) {
+    if (payload.support === undefined) {
       return response.badRequest({ message: "Invalid power" });
     }
 
+    if (!payload.density || payload.density <= 0 || payload.density > 1) {
+      return response.badRequest({ message: "Invalid power" });
+    }
+
+    if (!existsSync(`${app.makePath(FILE_UPLOAD_DIRECTORY)}/${payload.filename}`)) {
+      return response.badRequest({ message: "File does not exist" });
+    }
+
     const costService = new CostService();
-
-    const materialCost = costService.getMaterialCost(
-      payload.material,
-      payload.weight
-    );
-    const cleaningCost = costService.getCleaningCost(payload.cleaningTime);
-    const electricityCost = costService.getElectricityCost(
-      payload.impressingTime,
-      payload.power
-    );
-    const totalCost = costService.getTotalCost(
-      materialCost,
-      cleaningCost,
-      electricityCost
-    );
-
-    return response.send({
-      materialCost,
-      cleaningCost,
-      electricityCost,
-      totalCost,
+    const costs = costService.getCosts(payload.filename,  {
+      printer: payload.printer,
+      density: payload.density,
+      support: payload.support,
+      material: payload.material
     });
+
+
+    return response.send(costs);
   }
 }
