@@ -1,9 +1,8 @@
-import CuraService from "#services/curaService.js";
-import {Cost, PrintSetting} from "#models/cost/dto/postCostPayload.js";
+import CuraService from "#services/curaService";
+import {Cost, PrintSetting} from "#models/cost/dto/postCostPayload";
 import * as fs from "node:fs";
 import app from "@adonisjs/core/services/app";
 import {FILE_UPLOAD_DIRECTORY} from "../utils/consts.js";
-import {sum} from "../utils/utils.js";
 
 export default class CostService {
   // TODO: a mettre en base de données
@@ -63,34 +62,55 @@ export default class CostService {
     return materialCost + cleaningCost + electricityCost;
   }
 
-  async getCosts(filename: string, settings: PrintSetting): Promise<Cost> {
-    const curaService = new CuraService()
-    const fileBuffer = fs.readFileSync(app.makePath(`${FILE_UPLOAD_DIRECTORY}/${filename}`))
+  async getCostsForFile(filename: string, settings: PrintSetting): Promise<Cost> {
+      const curaService = new CuraService()
 
-    const results = await curaService.slice(settings.printer, fileBuffer)
+      if(!fs.existsSync(app.makePath(`${FILE_UPLOAD_DIRECTORY}/${filename}`))) {
+        console.log("hjkdgfkjshdfkjhskdjfh")
+      }
+      const fileBuffer = fs.readFileSync(app.makePath(`${FILE_UPLOAD_DIRECTORY}/${filename}`))
+      const results = await curaService.slice(settings.printer, fileBuffer)
 
-    const materialCost = this.getMaterialCost(
-      settings.material,
-      results.filamentUsage
-    );
+      console.log(results)
+      const materialCost = this.getMaterialCost(
+        settings.material,
+        results.filamentUsage
+      );
 
-    const cleaningCost = this.getCleaningCost(400); //TODO
-    const electricityCost = this.getElectricityCost(
-      results.printTime,
-      300 //TODO
-    );
+      const cleaningCost = this.getCleaningCost(400); //TODO
+      const electricityCost = this.getElectricityCost(
+        results.printTime,
+        300 //TODO
+      );
 
-    const totalCost = this.getTotalCost(
-      materialCost,
-      cleaningCost,
-      electricityCost
-    );
+      const totalCost = this.getTotalCost(
+        materialCost,
+        cleaningCost,
+        electricityCost
+      );
 
-    return {
-      materialCost,
-      cleaningCost,
-      electricityCost,
-      totalCost
-    }
+      return {
+        materialCost,
+        cleaningCost,
+        electricityCost,
+        totalCost
+      }
+  }
+
+  findAllUserFile() {
+    return fs.readdirSync(app.makePath(FILE_UPLOAD_DIRECTORY))
+  }
+
+  getCosts(settings: PrintSetting): Map<string, Cost> {
+    const files = this.findAllUserFile()
+    console.log(files)
+    const costMap = new Map<string, Cost>
+    files.forEach(async file => {
+      const costs = await this.getCostsForFile(file, settings)
+      costMap.set(file, costs)
+    })
+    console.log(costMap)
+
+    return costMap;
   }
 }
