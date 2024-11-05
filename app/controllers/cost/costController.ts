@@ -1,14 +1,15 @@
-import {PostCostPayload} from "#models/cost/dto/postCostPayload";
+import { PostCostPayload } from "#models/cost/dto/postCostPayload";
 import CostService from "#services/costService";
 import { HttpContext } from "@adonisjs/core/http";
 
 export default class CostController {
-  public handle({ request, response }): Promise<HttpContext> {
+  public async handle({ request, response }): Promise<HttpContext> {
     const payload: PostCostPayload = request.only([
       "material",
       "printer",
       "support",
-      "density"
+      "layerHeight",
+      "infill",
     ]);
 
     // TODO : list material
@@ -16,7 +17,8 @@ export default class CostController {
       return response.badRequest({ message: "Insert a material" });
     }
 
-    if (!payload.printer ) { //TODO get printer by name
+    if (!payload.printer) {
+      //TODO get printer by name
       return response.badRequest({ message: "Invalid printer" });
     }
 
@@ -24,20 +26,27 @@ export default class CostController {
       return response.badRequest({ message: "Invalid support" });
     }
 
-    if (!payload.density || payload.density <= 0 || payload.density > 1) {
+    if (!payload.infill || payload.infill <= 0 || payload.infill > 1) {
       return response.badRequest({ message: "Invalid power" });
     }
 
+    if (
+      !payload.layerHeight ||
+      payload.layerHeight <= 0 ||
+      payload.layerHeight > 1
+    ) {
+      return response.badRequest({ message: "Invalid layer height" });
+    }
 
     const costService = new CostService();
-    const costs = costService.getCosts(  {
+    const costs = await costService.getCosts({
       printer: payload.printer,
-      density: payload.density,
       support: payload.support,
-      material: payload.material
+      material: payload.material,
+      layerHeight: payload.layerHeight,
+      infill: payload.infill,
     });
 
-
-    return response.send(costs);
+    return response.send(Object.fromEntries(costs));
   }
 }
