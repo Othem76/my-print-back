@@ -1,4 +1,5 @@
 import router from "@adonisjs/core/services/router";
+import { middleware } from "./kernel.js";
 
 const UserController = () => import("#controllers/user/userController");
 const StlController = () => import("#controllers/stl/stlController");
@@ -10,6 +11,15 @@ router.get("users/by-email", [UserController, "getUserByEmail"]);
 router.post("users", [UserController, "create"]);
 router.put("users", [UserController, "update"]);
 router.delete("users/:id", [UserController, "delete"]);
+
+router.post("auth", async ({ auth }) => {
+  console.log(auth.user) // User
+  console.log(auth.authenticatedViaGuard) // 'api'
+  console.log(auth.user!.currentAccessToken) // AccessToken
+})
+.use(middleware.auth({
+  guards: [ 'api' ],
+}));
 
 router.post("uploadOne", [StlController, "uploadOne"]);
 router.post("uploadMany", [StlController, "uploadMany"]);

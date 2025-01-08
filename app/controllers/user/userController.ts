@@ -122,4 +122,14 @@ export default class UserController {
       });
     }
   }
+
+  auth({ request, response }): HttpContext {
+    const { email, password } = request.only(["email", "password"]);
+
+    if (!email || !password) {
+      return response.status(400).send({ error: "Email and password are required" });
+    }
+
+    return response.send({ message: "Auth route" });
+  }
 }
