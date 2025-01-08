@@ -4,6 +4,11 @@ import UserService from "#services/userService";
 import CreateUserPayload from "#models/user/createUserPayload";
 import UpdateUserPayload from "#models/user/updateUserPayload";
 
+
+/**
+ * LEGACY CONTROLLER WAITING FOR DELETE
+ */
+
 @inject()
 export default class UserController {
   constructor(private userService: UserService) {}
@@ -121,15 +126,5 @@ export default class UserController {
         error,
       });
     }
-  }
-
-  auth({ request, response }): HttpContext {
-    const { email, password } = request.only(["email", "password"]);
-
-    if (!email || !password) {
-      return response.status(400).send({ error: "Email and password are required" });
-    }
-
-    return response.send({ message: "Auth route" });
   }
 }
