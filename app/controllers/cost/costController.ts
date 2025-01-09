@@ -1,9 +1,8 @@
 import PostCostPayload from "#models/cost/dto/postCostPayload";
-import CostService from "#services/costService";
 import { HttpContext } from "@adonisjs/core/http";
 
 export default class CostController {
-  handle({ request, response }): Promise<HttpContext> {
+  async handle({ request, response }): Promise<HttpContext> {
     const payload: PostCostPayload = request.only([
       "material",
       "weight",
@@ -32,6 +31,8 @@ export default class CostController {
     if (!payload.power || payload.power <= 0) {
       return response.badRequest({ message: "Invalid power" });
     }
+
+    const { default: CostService } = await import('#services/costService')
 
     const costService = new CostService();
 

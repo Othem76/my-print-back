@@ -39,4 +39,4 @@ router.group(() => {
 router.post("uploadOne", [StlController, "uploadOne"]);
 router.post("uploadMany", [StlController, "uploadMany"]);
 
-router.post("getCosts", [CostController]);
+router.post("getCosts", [CostController]).use(middleware.auth());
