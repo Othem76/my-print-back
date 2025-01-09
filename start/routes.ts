@@ -8,6 +8,8 @@ const CostController = () => import("#controllers/cost/costController");
 const QuoteController = () => import("#controllers/quote/quoteController");
 const PrinterController = () =>
   import("#controllers/printer/printerController");
+const MaterialController = () =>
+  import("#controllers/material/materialController");
 
 // To get swagger in YAML
 router.get("/swagger", async () => {
@@ -40,3 +42,7 @@ router.post("getCosts", [CostController]);
 router.get("printers", [PrinterController, "getAllPrinters"]);
 router.get("printers/:id", [PrinterController, "getPrinterById"]);
 router.delete("printers/:id", [PrinterController, "deletePrinter"]);
+
+router.get("materials", [MaterialController, "getAllMaterials"]);
+router.get("materials/:id", [MaterialController, "getMaterialById"]);
+router.delete("materials/:id", [MaterialController, "deleteMaterial"]);
