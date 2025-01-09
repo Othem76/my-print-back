@@ -11,7 +11,7 @@ export default class CostService {
     "ABS X130 Blue": 0.2245,
     "ABS X130 red": 0.2245,
     "ABS X130 yellow": 0.2245,
-    TPU92: 0.2712,
+    "TPU92": 0.2712,
     "Innofil ABS Fusion + Naturel Ø 1,75 mm": 0.078,
     "Innofil ABS Silver Ø 1,75 mm": 0.0404,
     "Innofil ASA Ø 1,75 mm": 0.0553,
