@@ -17,7 +17,6 @@ export default class QuoteController {
       "totalCost",
     ]);
 
-
     const {default: QuoteService} = await import("#services/quoteService")
 
     try {

@@ -13,7 +13,7 @@ router.get("/swagger", async () => {
 });
 
 // Renders Swagger-UI and passes YAML-output of /swagger
-router.get("/docs", async () => {
+router.get("/", async () => {
   // Choose your favorite Swagger-UI renderer
 
   return AutoSwagger.default.ui("/swagger", swagger);
