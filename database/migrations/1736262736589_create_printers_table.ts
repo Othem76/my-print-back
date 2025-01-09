@@ -9,7 +9,7 @@ export default class extends BaseSchema {
       table.string("name").nullable();
       table.string("plate_size").nullable();
       table.integer("cleaning_cost").notNullable();
-      table.integer("impressing_cost").notNullable();
+      table.float("impressing_cost").notNullable();
     });
   }
 
