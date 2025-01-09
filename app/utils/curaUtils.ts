@@ -1,4 +1,4 @@
-import { override } from "cura-wasm/dist/types.js";
+import { override } from "cura-wasm/dist/types";
 
 interface CuraResponse {
   flavor: String;

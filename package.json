@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node ace serve --watch",
     "build": "node ace build",
-    "dev": "node ace serve --hmr",
+    "dev": "node ace serve",
     "test": "node ace test",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -67,6 +67,7 @@
     "cura-wasm-definitions": "^1.5.1",
     "luxon": "^3.5.0",
     "pg": "^8.13.0",
+    "puppeteer": "^23.11.1",
     "reflect-metadata": "^0.2.2"
   },
   "hotHook": {
