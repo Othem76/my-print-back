@@ -8,6 +8,9 @@ export default class Printer extends BaseModel {
   declare name: string | null;
 
   @column()
+  declare supportedImpressingType: number;
+
+  @column()
   declare plateSize: string | null;
 
   @column()
