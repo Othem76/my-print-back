@@ -1,8 +1,8 @@
 import { HttpContext } from "@adonisjs/core/http";
 import { inject } from "@adonisjs/core";
 import UserService from "#services/userService";
-import CreateUserPayload from "#models/user/createUserPayload";
-import UpdateUserPayload from "#models/user/updateUserPayload";
+import CreateUserPayload from "#interfaces/user/createUserPayload.js";
+import UpdateUserPayload from "#interfaces/user/updateUserPayload.js";
 
 @inject()
 export default class UserController {

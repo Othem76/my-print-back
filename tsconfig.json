@@ -8,7 +8,8 @@
       "#controllers/*": ["app/controllers/*"],
       "#models/*": ["app/models/*"],
       "#repositories/*": ["app/repositories/*"],
-      "#services/*": ["app/services/*"]
+      "#services/*": ["app/services/*"],
+      "#interfaces/*": ["app/interfaces/*"],
     }
   }
 }

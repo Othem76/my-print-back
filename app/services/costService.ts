@@ -1,8 +1,9 @@
 import CuraService from "#services/curaService";
-import { Cost, PrintSetting } from "#models/cost/dto/postCostPayload";
 import * as fs from "node:fs";
 import app from "@adonisjs/core/services/app";
 import { FILE_UPLOAD_DIRECTORY } from "../utils/consts.js";
+import { PrintSetting } from "#interfaces/cost/printSettings";
+import { Cost } from "#models/cost/cost";
 
 export default class CostService {
   // TODO: a mettre en base de données

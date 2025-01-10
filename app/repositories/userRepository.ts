@@ -1,5 +1,5 @@
-import CreateUserPayload from "#models/user/createUserPayload";
-import UpdateUserPayload from "#models/user/updateUserPayload";
+import CreateUserPayload from "#interfaces/user/createUserPayload.js";
+import UpdateUserPayload from "#interfaces/user/updateUserPayload.js";
 import User from "#models/user/user";
 import UserRepositoryInterface from "#repositoriesInterface/userRepositoryInterface";
 
