@@ -16,9 +16,9 @@ router.get("/swagger", async () => {
 router.get("/", async () => {
   // Choose your favorite Swagger-UI renderer
 
-  return AutoSwagger.default.ui("/swagger", swagger);
-  // return AutoSwagger.default.scalar("/swagger");
-  // return AutoSwagger.default.rapidoc("/swagger", "view");
+  return AutoSwagger.default.ui("/swagger");
+  //return AutoSwagger.default.scalar("/swagger");
+  //return AutoSwagger.default.rapidoc("/swagger", "view");
 });
 
 router.get("users", [UserController, "getAll"]);

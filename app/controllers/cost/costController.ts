@@ -1,16 +1,19 @@
-import { PostCostPayload } from "#models/cost/dto/postCostPayload";
+import { PrintSetting } from "#interfaces/cost/printSettings.js";
 import CostService from "#services/costService";
+import { inject } from "@adonisjs/core";
 import { HttpContext } from "@adonisjs/core/http";
 
+@inject()
 export default class CostController {
-  public async handle({ request, response }): Promise<HttpContext> {
-    const payload: PostCostPayload = request.only([
-      "material",
-      "printer",
-      "support",
-      "layerHeight",
-      "infill",
-    ]);
+  constructor(private costService: CostService) {}
+
+  /**
+   * @handle
+   * @requestBody <PrintSetting>
+   * @content application/json
+   */
+  async handle({ request, response }: HttpContext) {
+    const payload: PrintSetting = request.body() as PrintSetting;
 
     // TODO : list material
     if (!payload.material) {
@@ -26,8 +29,8 @@ export default class CostController {
       return response.badRequest({ message: "Invalid support" });
     }
 
-    if (!payload.infill || payload.infill <= 0 || payload.infill > 1) {
-      return response.badRequest({ message: "Invalid power" });
+    if (!payload.infill || payload.infill <= 0 || payload.infill > 100) {
+      return response.badRequest({ message: "Invalid infill" });
     }
 
     if (
@@ -38,8 +41,7 @@ export default class CostController {
       return response.badRequest({ message: "Invalid layer height" });
     }
 
-    const costService = new CostService();
-    const costs = await costService.getCosts({
+    const costs = await this.costService.getCosts({
       printer: payload.printer,
       support: payload.support,
       material: payload.material,

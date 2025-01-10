@@ -1,8 +1,8 @@
 import User from "#models/user/user";
 import userRepository from "#repositories/userRepository";
-import CreateUserPayload from "#models/user/createUserPayload";
+import CreateUserPayload from "#interfaces/user/createUserPayload.js";
 import { inject } from "@adonisjs/core";
-import UpdateUserPayload from "#models/user/updateUserPayload";
+import UpdateUserPayload from "#interfaces/user/updateUserPayload.js";
 
 @inject()
 export default class UserService {
