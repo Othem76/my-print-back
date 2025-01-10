@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { registerValidator, loginValidator } from '#validators/auth'
+import User from '#models/user/user'
 
 export default class AuthController {
   /**
@@ -12,7 +13,6 @@ export default class AuthController {
   async register({ request, response }: HttpContext) {
     const payload = await request.validateUsing(registerValidator)
 
-    const { default: User } = await import('#models/user/user')
     const user = await User.create(payload)
 
     return response.created(user)
@@ -28,7 +28,6 @@ export default class AuthController {
   async login({ request, response }: HttpContext) {
     const { email, password } = await request.validateUsing(loginValidator)
 
-    const { default: User } = await import('#models/user/user')
     const user = await User.verifyCredentials(email, password)
     const token = await User.accessTokens.create(user)
 
@@ -51,9 +50,17 @@ export default class AuthController {
       return response.badRequest({ message: 'Token not found' })
     }
 
-    const { default: User } = await import('#models/user/user')
     await User.accessTokens.delete(user, token)
 
     return response.ok({ message: 'Logged out' })
+  }
+
+  async me({ auth, response }: HttpContext) {
+    try {
+      const user = auth.getUserOrFail()
+      return response.ok(user)
+    } catch (error) {
+      return response.unauthorized({ error: 'User not found' })
+    }
   }
 }

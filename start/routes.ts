@@ -24,15 +24,16 @@ router.get("/docs", async () => {
 router.group(() => {
   router.post('register', [AuthController, 'register'])
   router.post('login', [AuthController, 'login'])
-  router.get('me', async ({ auth, response }) => {
-    try {
-      const user = auth.getUserOrFail()
-      return response.ok(user)
-    } catch (error) {
-      return response.unauthorized({ error: 'User not found' })
-    }
-  })
-  .use(middleware.auth())
+  // router.get('me', async ({ auth, response }) => {
+  //   try {
+  //     const user = auth.getUserOrFail()
+  //     return response.ok(user)
+  //   } catch (error) {
+  //     return response.unauthorized({ error: 'User not found' })
+  //   }
+  // })
+  // .use(middleware.auth())
+  router.get('me', [AuthController, 'me']).use(middleware.auth())
   router.post('logout', [AuthController, 'logout']).use(middleware.auth())
 }).prefix('user')
 
