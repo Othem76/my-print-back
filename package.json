@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "node ace serve --watch",
-    "build": "npm install @swc/core-linux-x64-gnu && node ace build",
+    "build": "npm install @swc/core-linux-x64-gnu && node ace build && node public/bin/server.js",
     "dev": "node ace serve",
     "test": "node ace test",
     "lint": "eslint .",
