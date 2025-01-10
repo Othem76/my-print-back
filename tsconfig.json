@@ -10,6 +10,7 @@
       "#repositories/*": ["app/repositories/*"],
       "#services/*": ["app/services/*"],
       "#interfaces/*": ["app/interfaces/*"],
-    }
+    },
+    "resolveJsonModule": true
   }
 }

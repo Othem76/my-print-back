@@ -1,9 +1,9 @@
 import { HttpContext } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
 import { cuid } from '@adonisjs/core/helpers'
-import MultipartFile from '@adonisjs/bodyparser'
+import { MultipartFile } from '@adonisjs/bodyparser'
 
-export default class StlController {  
+export default class StlController {
   /**
    * @uploadOne
    * @description Upload a single STL file and store it in the storage/uploads directory
@@ -12,7 +12,7 @@ export default class StlController {
    * @requestFormDataBody {"stlFile":{"type":"File","format":"stl","description":"The STL file to upload"}}
    */
   async uploadOne({ request, response }: HttpContext) {
-    const file: MultipartFile = request.file('stlFile')
+    const file: MultipartFile | null = request.file('stlFile')
 
     if (!file) {
       return response.status(400).send({
@@ -58,7 +58,7 @@ export default class StlController {
    * @uploadMany
    * @description Upload multiple STL files and store them in the storage/uploads directory
    * @responseBody 200 - { "message": "Tout les fichiers uploadés avec succès." }
-   * @responseBody 400 - { "errors": [ { "message": "No file uploaded" } ] } 
+   * @responseBody 400 - { "errors": [ { "message": "No file uploaded" } ] }
    */
   async uploadMany({ request, response }: HttpContext) {
     const files: MultipartFile[] = request.files('stlFiles', {
@@ -110,9 +110,7 @@ export default class StlController {
     return response.ok({ message: 'Tout les fichiers uploadés avec succès.' })
   }
 
-  async clearFiles({ request, response }: HttpContext) {
+  async clearFiles({ response }: HttpContext) {
     return response.ok({ message: 'Tout les fichiers uploadés avec succès.' })
   }
-
-
 }

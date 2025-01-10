@@ -1,10 +1,7 @@
 import { inject } from "@adonisjs/core";
 import { CuraWASM } from "cura-wasm";
 import { resolveDefinition } from "cura-wasm-definitions";
-import CuraResponse, {
-  convertToArrayBuffer,
-  DefaultCuraSettings,
-} from "../utils/curaUtils.js";
+import CuraResponse, { convertToArrayBuffer } from "../utils/curaUtils.js";
 //import { printers } from "cura-wasm-definitions/src/definitions/index.js";
 
 @inject()
