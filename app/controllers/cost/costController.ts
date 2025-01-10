@@ -36,17 +36,18 @@ export default class CostController {
     if (
       !payload.layerHeight ||
       payload.layerHeight <= 0 ||
-      payload.layerHeight > 1
+      payload.layerHeight > 100
     ) {
       return response.badRequest({ message: "Invalid layer height" });
     }
 
     const costs = await this.costService.getCosts({
+      fileId: payload.fileId,
       printer: payload.printer,
       support: payload.support,
       material: payload.material,
-      layerHeight: payload.layerHeight,
-      infill: payload.infill,
+      layerHeight: payload.layerHeight / 100,
+      infill: payload.infill / 100,
     });
 
     return response.send(Object.fromEntries(costs));

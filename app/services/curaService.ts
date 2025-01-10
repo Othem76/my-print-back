@@ -84,7 +84,7 @@ export default class CuraService {
       definition: resolveDefinition(machine as any),
       overrides: settings,
       transfer: true,
-      verbose: false,
+      verbose: true,
     });
 
     const arrayBuffer = convertToArrayBuffer(stlFile);
