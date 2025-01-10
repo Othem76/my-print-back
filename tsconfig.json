@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "./",
-    "outDir": "./build",
+    "outDir": "./public",
     "paths": {
       "#controllers/*": ["app/controllers/*"],
       "#models/*": ["app/models/*"],
