@@ -1,3 +1,9 @@
+import CuraService from "#services/curaService";
+import { Cost, PrintSetting } from "#models/cost/dto/postCostPayload";
+import * as fs from "node:fs";
+import app from "@adonisjs/core/services/app";
+import { FILE_UPLOAD_DIRECTORY } from "../utils/consts.js";
+
 export default class CostService {
   // TODO: a mettre en base de données
   materialPrices: { [key: string]: number } = {
@@ -5,7 +11,7 @@ export default class CostService {
     "ABS X130 Blue": 0.2245,
     "ABS X130 red": 0.2245,
     "ABS X130 yellow": 0.2245,
-    TPU92: 0.2712,
+    "TPU92": 0.2712,
     "Innofil ABS Fusion + Naturel Ø 1,75 mm": 0.078,
     "Innofil ABS Silver Ø 1,75 mm": 0.0404,
     "Innofil ASA Ø 1,75 mm": 0.0553,
@@ -33,19 +39,22 @@ export default class CostService {
     "Ultimaker PLA RED Ø 2,85 mm": 0.044,
     "Ultimaker PLA BLUE Ø 2,85 mm": 0.0413,
     "Ultimaker PLA GREEN Ø 2,85 mm": 0.034,
+    "Generic PLA": 0.027,
   };
 
   getMaterialCost(material: keyof typeof this.materialPrices, weight: number) {
-    return this.materialPrices[material] * weight;
+    return (this.materialPrices[material] * weight) / 1000;
   }
 
   getCleaningCost(time: number) {
-    return 4.017 * time;
+    const cleaningCost = 0.4998;
+    return (time / 3600) * cleaningCost;
   }
 
   getElectricityCost(time: number, power: number) {
-    const electricityCost = 0.2516;
-    return ((time * power) / 1000) * electricityCost;
+    const electricityCost = 0.4939;
+    //return ((time * power) / 1000) * electricityCost; ????????????????
+    return (time / 3600) * electricityCost;
   }
 
   getTotalCost(
@@ -53,6 +62,72 @@ export default class CostService {
     cleaningCost: number,
     electricityCost: number
   ) {
-    return materialCost + cleaningCost + electricityCost;
+    return (
+      Math.round((materialCost + cleaningCost + electricityCost) * 100) / 100
+    );
+  }
+
+  async getCostsForFile(
+    filename: string,
+    settings: PrintSetting
+  ): Promise<Cost> {
+    const curaService = new CuraService();
+
+    const fileBuffer = fs.readFileSync(
+      app.makePath(`${FILE_UPLOAD_DIRECTORY}/${filename}`)
+    );
+    const results = await curaService.slice(
+      settings.printer,
+      fileBuffer,
+      settings.support,
+      settings.layerHeight,
+      settings.infill
+    );
+
+    const materialCost = this.getMaterialCost(
+      settings.material,
+      results.filamentUsage
+    );
+
+    const cleaningCost = this.getCleaningCost(3600); //TODO
+    const electricityCost = this.getElectricityCost(
+      results.printTime,
+      300 //TODO
+    );
+
+    const totalCost = this.getTotalCost(
+      materialCost,
+      cleaningCost,
+      electricityCost
+    );
+
+    const hours = Math.floor(results.printTime / 3600);
+    const minutes = Math.floor((results.printTime % 3600) / 60);
+    const printTime = `${hours.toString().padStart(2, "0")}h${minutes.toString().padStart(2, "0")}`;
+
+    return {
+      printTime,
+      materialCost,
+      cleaningCost,
+      electricityCost,
+      totalCost,
+    };
+  }
+
+  findAllUserFile() {
+    return fs.readdirSync(app.makePath(FILE_UPLOAD_DIRECTORY));
+  }
+
+  async getCosts(settings: PrintSetting): Promise<Map<string, Cost>> {
+    const files = this.findAllUserFile();
+
+    const results = await Promise.all(
+      files.map(async (file) => {
+        const costs = await this.getCostsForFile(file, settings);
+        return [file, costs] as [string, Cost];
+      })
+    );
+
+    return new Map(results);
   }
 }

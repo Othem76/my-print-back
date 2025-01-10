@@ -1,61 +1,52 @@
-import PostCostPayload from "#models/cost/dto/postCostPayload";
+import { PostCostPayload } from "#models/cost/dto/postCostPayload";
+import CostService from "#services/costService";
 import { HttpContext } from "@adonisjs/core/http";
 
 export default class CostController {
-  async handle({ request, response }): Promise<HttpContext> {
+  public async handle({ request, response }): Promise<HttpContext> {
     const payload: PostCostPayload = request.only([
       "material",
-      "weight",
-      "cleaningTime",
-      "impressingTime",
-      "power",
+      "printer",
+      "support",
+      "layerHeight",
+      "infill",
     ]);
+
     // TODO : list material
     if (!payload.material) {
       return response.badRequest({ message: "Insert a material" });
     }
 
-    if (!payload.weight || payload.weight <= 0) {
-      return response.badRequest({ message: "Invalid volume" });
+    if (!payload.printer) {
+      //TODO get printer by name
+      return response.badRequest({ message: "Invalid printer" });
     }
 
-    if (
-      !payload.cleaningTime ||
-      payload.cleaningTime <= 0 ||
-      !payload.impressingTime ||
-      payload.impressingTime <= 0
-    ) {
-      return response.badRequest({ message: "Invalid time" });
+    if (payload.support === undefined) {
+      return response.badRequest({ message: "Invalid support" });
     }
 
-    if (!payload.power || payload.power <= 0) {
+    if (!payload.infill || payload.infill <= 0 || payload.infill > 1) {
       return response.badRequest({ message: "Invalid power" });
     }
 
-    const { default: CostService } = await import('#services/costService')
+    if (
+      !payload.layerHeight ||
+      payload.layerHeight <= 0 ||
+      payload.layerHeight > 1
+    ) {
+      return response.badRequest({ message: "Invalid layer height" });
+    }
 
     const costService = new CostService();
-
-    const materialCost = costService.getMaterialCost(
-      payload.material,
-      payload.weight
-    );
-    const cleaningCost = costService.getCleaningCost(payload.cleaningTime);
-    const electricityCost = costService.getElectricityCost(
-      payload.impressingTime,
-      payload.power
-    );
-    const totalCost = costService.getTotalCost(
-      materialCost,
-      cleaningCost,
-      electricityCost
-    );
-
-    return response.send({
-      materialCost,
-      cleaningCost,
-      electricityCost,
-      totalCost,
+    const costs = await costService.getCosts({
+      printer: payload.printer,
+      support: payload.support,
+      material: payload.material,
+      layerHeight: payload.layerHeight,
+      infill: payload.infill,
     });
+
+    return response.send(Object.fromEntries(costs));
   }
 }
