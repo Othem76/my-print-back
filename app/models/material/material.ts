@@ -11,7 +11,7 @@ export default class Material extends BaseModel {
   declare impressingType: number;
 
   @column()
-  declare curaPrinterName: string | null;
+  declare curaMaterialId: string | null;
 
   @column()
   declare grammePrize: number;

@@ -6,6 +6,7 @@ export default class PrinterSeeder extends BaseSeeder {
     await Printer.createMany([
       {
         name: "ULTIMAKER S3",
+        curaPrinterName: "Ultimaker S3",
         plateSize: "230 x 190 x 200",
         cleaningCost: 2,
         impressingCost: 0.03822,
@@ -13,6 +14,7 @@ export default class PrinterSeeder extends BaseSeeder {
       },
       {
         name: "CREALITY CR10-S5",
+        curaPrinterName: "Creality CR-10 S5",
         plateSize: "500 x 500 x 500",
         cleaningCost: 2,
         impressingCost: 0.03822,

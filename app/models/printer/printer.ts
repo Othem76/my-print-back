@@ -11,6 +11,9 @@ export default class Printer extends BaseModel {
   declare supportedImpressingType: number;
 
   @column()
+  declare curaPrinterName: string | null;
+
+  @column()
   declare plateSize: string | null;
 
   @column()

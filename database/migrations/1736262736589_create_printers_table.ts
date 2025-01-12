@@ -7,6 +7,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments("id").notNullable();
       table.string("name").nullable();
+      table.string("cura_printer_name").nullable();
       table.string("plate_size").nullable();
       table.integer("cleaning_cost").notNullable();
       table.float("impressing_cost").notNullable();

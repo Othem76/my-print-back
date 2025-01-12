@@ -6,7 +6,7 @@ export default class MaterialSeeder extends BaseSeeder {
     await Material.createMany([
       {
         name: "ABS X130 apple green",
-        curaPrinterName: "ABS X130 apple green",
+        curaMaterialId: "ABS X130 apple green",
         grammePrize: 0.2245,
         diameter: 1.75,
         color: "apple green",
@@ -14,7 +14,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "ABS X130 Blue",
-        curaPrinterName: "ABS X130 Blue",
+        curaMaterialId: "ABS X130 Blue",
         grammePrize: 0.2245,
         diameter: 1.75,
         color: "blue",
@@ -22,7 +22,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "ABS X130 red",
-        curaPrinterName: "ABS X130 red",
+        curaMaterialId: "ABS X130 red",
         grammePrize: 0.2245,
         diameter: 1.75,
         color: "red",
@@ -30,7 +30,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "ABS X130 yellow",
-        curaPrinterName: "ABS X130 yellow",
+        curaMaterialId: "ABS X130 yellow",
         grammePrize: 0.2245,
         diameter: 1.75,
         color: "yellow",
@@ -38,7 +38,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "TPU92",
-        curaPrinterName: "TPU92",
+        curaMaterialId: "TPU92",
         grammePrize: 0.2712,
         diameter: 1.75,
         color: null,
@@ -46,7 +46,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Innofil ABS Fusion + Naturel Ø 1,75 mm",
-        curaPrinterName: "Innofil ABS Fusion + Naturel Ø 1,75 mm",
+        curaMaterialId: "Innofil ABS Fusion + Naturel Ø 1,75 mm",
         grammePrize: 0.078,
         diameter: 1.75,
         color: "naturel",
@@ -54,7 +54,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Innofil ABS Silver Ø 1,75 mm",
-        curaPrinterName: "Innofil ABS Silver Ø 1,75 mm",
+        curaMaterialId: "Innofil ABS Silver Ø 1,75 mm",
         grammePrize: 0.0404,
         diameter: 1.75,
         color: "silver",
@@ -62,7 +62,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Innofil ASA Ø 1,75 mm",
-        curaPrinterName: "Innofil ASA Ø 1,75 mm",
+        curaMaterialId: "Innofil ASA Ø 1,75 mm",
         grammePrize: 0.0553,
         diameter: 1.75,
         color: null,
@@ -70,7 +70,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Innofil EPR PET White Ø 1,75 mm",
-        curaPrinterName: "Innofil EPR PET White Ø 1,75 mm",
+        curaMaterialId: "Innofil EPR PET White Ø 1,75 mm",
         grammePrize: 0.046,
         diameter: 1.75,
         color: "white",
@@ -78,7 +78,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Innofil PLA BLACK Ø 1,75 mm",
-        curaPrinterName: "Innofil PLA BLACK Ø 1,75 mm",
+        curaMaterialId: "Innofil PLA BLACK Ø 1,75 mm",
         grammePrize: 0.044,
         diameter: 1.75,
         color: "black",
@@ -86,7 +86,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Innofil PLA WHITE Ø 1,75 mm",
-        curaPrinterName: "Innofil PLA WHITE Ø 1,75 mm",
+        curaMaterialId: "Innofil PLA WHITE Ø 1,75 mm",
         grammePrize: 0.044,
         diameter: 1.75,
         color: "white",
@@ -94,7 +94,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Innofil PLA YELLOW Ø 1,75 mm",
-        curaPrinterName: "Innofil PLA YELLOW Ø 1,75 mm",
+        curaMaterialId: "Innofil PLA YELLOW Ø 1,75 mm",
         grammePrize: 0.0413,
         diameter: 1.75,
         color: "yellow",
@@ -102,7 +102,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Innofil PP White Ø 1,75 mm",
-        curaPrinterName: "Innofil PP White Ø 1,75 mm",
+        curaMaterialId: "Innofil PP White Ø 1,75 mm",
         grammePrize: 0.0743,
         diameter: 1.75,
         color: "white",
@@ -110,7 +110,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Innoflex 45 Black Ø 1,75 mm",
-        curaPrinterName: "Innoflex 45 Black Ø 1,75 mm",
+        curaMaterialId: "Innoflex 45 Black Ø 1,75 mm",
         grammePrize: 0.076,
         diameter: 1.75,
         color: "black",
@@ -118,7 +118,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "MODELE ABS PLUS ivoire",
-        curaPrinterName: "MODELE ABS PLUS ivoire",
+        curaMaterialId: "MODELE ABS PLUS ivoire",
         grammePrize: 0.4277,
         diameter: null,
         color: "ivoire",
@@ -126,7 +126,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "MODELE AGILUS",
-        curaPrinterName: "MODELE AGILUS",
+        curaMaterialId: "MODELE AGILUS",
         grammePrize: 0.45,
         diameter: null,
         color: null,
@@ -134,7 +134,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "MODELE DURUS",
-        curaPrinterName: "MODELE DURUS",
+        curaMaterialId: "MODELE DURUS",
         grammePrize: 0.4,
         diameter: null,
         color: null,
@@ -142,7 +142,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "MODELE TANGOBLACKPLUS",
-        curaPrinterName: "MODELE TANGOBLACKPLUS",
+        curaMaterialId: "MODELE TANGOBLACKPLUS",
         grammePrize: 0.45,
         diameter: null,
         color: "black",
@@ -150,7 +150,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "MODELE TANGOGREY",
-        curaPrinterName: "MODELE TANGOGREY",
+        curaMaterialId: "MODELE TANGOGREY",
         grammePrize: 0.45,
         diameter: null,
         color: "grey",
@@ -158,7 +158,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "MODELE VERO CYAN",
-        curaPrinterName: "MODELE VERO CYAN",
+        curaMaterialId: "MODELE VERO CYAN",
         grammePrize: 0.34,
         diameter: null,
         color: "cyan",
@@ -166,7 +166,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "MODELE VERO MAGENTA",
-        curaPrinterName: "MODELE VERO MAGENTA",
+        curaMaterialId: "MODELE VERO MAGENTA",
         grammePrize: 0.34,
         diameter: null,
         color: "magenta",
@@ -174,7 +174,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "MODELE VERO YELLOW",
-        curaPrinterName: "MODELE VERO YELLOW",
+        curaMaterialId: "MODELE VERO YELLOW",
         grammePrize: 0.34,
         diameter: null,
         color: "yellow",
@@ -182,7 +182,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "MODELE VEROWHITE PLUS RGD835",
-        curaPrinterName: "MODELE VEROWHITE PLUS RGD835",
+        curaMaterialId: "MODELE VEROWHITE PLUS RGD835",
         grammePrize: 0.2583,
         diameter: null,
         color: "white",
@@ -190,7 +190,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Renkforce PLA Blue Ø 1,75 mm",
-        curaPrinterName: "Renkforce PLA Blue Ø 1,75 mm",
+        curaMaterialId: "Renkforce PLA Blue Ø 1,75 mm",
         grammePrize: 0.034,
         diameter: 1.75,
         color: "blue",
@@ -198,7 +198,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Renkforce PLA RED Ø 1,75 mm",
-        curaPrinterName: "Renkforce PLA RED Ø 1,75 mm",
+        curaMaterialId: "Renkforce PLA RED Ø 1,75 mm",
         grammePrize: 0.034,
         diameter: 1.75,
         color: "red",
@@ -206,7 +206,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "SUPPORT FULLCURE 705",
-        curaPrinterName: "SUPPORT FULLCURE 705",
+        curaMaterialId: "SUPPORT FULLCURE 705",
         grammePrize: 0.1347,
         diameter: 1.75,
         color: null,
@@ -214,7 +214,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "SUPPORT PS400",
-        curaPrinterName: "SUPPORT PS400",
+        curaMaterialId: "SUPPORT PS400",
         grammePrize: 0.4277,
         diameter: 1.75,
         color: null,
@@ -222,7 +222,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Verbatim PLA GREEN Ø 1,75 mm",
-        curaPrinterName: "Verbatim PLA GREEN Ø 1,75 mm",
+        curaMaterialId: "Verbatim PLA GREEN Ø 1,75 mm",
         grammePrize: 0.031,
         diameter: 1.75,
         color: "green",
@@ -230,7 +230,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Ultimaker PLA WHITE Ø 2,85 mm",
-        curaPrinterName: "Ultimaker PLA WHITE Ø 2,85 mm",
+        curaMaterialId: "Ultimaker PLA WHITE Ø 2,85 mm",
         grammePrize: 0.044,
         diameter: 2.85,
         color: "white",
@@ -238,7 +238,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Ultimaker PLA RED Ø 2,85 mm",
-        curaPrinterName: "Ultimaker PLA RED Ø 2,85 mm",
+        curaMaterialId: "Ultimaker PLA RED Ø 2,85 mm",
         grammePrize: 0.044,
         diameter: 2.85,
         color: "red",
@@ -246,7 +246,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Ultimaker PLA BLUE Ø 2,85 mm",
-        curaPrinterName: "Ultimaker PLA BLUE Ø 2,85 mm",
+        curaMaterialId: "Ultimaker PLA BLUE Ø 2,85 mm",
         grammePrize: 0.0413,
         diameter: 2.85,
         color: "blue",
@@ -254,7 +254,7 @@ export default class MaterialSeeder extends BaseSeeder {
       },
       {
         name: "Ultimaker PLA GREEN Ø 2,85 mm",
-        curaPrinterName: "Ultimaker PLA GREEN Ø 2,85 mm",
+        curaMaterialId: "Ultimaker PLA GREEN Ø 2,85 mm",
         grammePrize: 0.034,
         diameter: 2.85,
         color: "green",
