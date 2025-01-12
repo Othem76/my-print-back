@@ -20,6 +20,6 @@ export default class printerRepository implements PrinterRepositoryInterface {
     throw new Error("Method not implemented.");
   }
   async deletePrinter(printerId: number): Promise<void> {
-    await Printer.query().where("id", printerId).delete();
+    await Printer.query().where({ id: printerId }).delete();
   }
 }

@@ -15,7 +15,7 @@ export default class MaterialRepository implements MaterialRepositoryInterface {
   async getMaterialByImpressingTypeId(
     impressingTypeId: number
   ): Promise<Material[]> {
-    return await Material.query().where("impressing_type", impressingTypeId);
+    return await Material.query().where({ impressing_type: impressingTypeId });
   }
 
   createMaterial(material: CreateMaterialPayload): Promise<Material> {
@@ -30,6 +30,6 @@ export default class MaterialRepository implements MaterialRepositoryInterface {
   }
 
   async deleteMaterial(materialId: number): Promise<void> {
-    await Material.query().where("id", materialId).delete();
+    await Material.query().where({ id: materialId }).delete();
   }
 }

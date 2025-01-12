@@ -39,7 +39,6 @@ router.post("uploadMany", [StlController, "uploadMany"]);
 
 router.post("costs", [CostController]);
 router.post("quotes/generate-pdf", [QuoteController, "generatePdf"]);
-router.post("getCosts", [CostController]);
 
 router.get("printers", [PrinterController, "getAllPrinters"]);
 router.get("printers/:id", [PrinterController, "getPrinterById"]);

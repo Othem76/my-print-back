@@ -12,7 +12,7 @@ export default class PrinterController {
    * @responseBody 200 - [{"id":6,"name":"CREALITY CR10-S5","plateSize":"500 x 500 x 500","cleaningCost":2,"impressingCost":0.03822},{"id":5,"name":"ULTIMAKER S3","plateSize":"230 x 190 x 200","cleaningCost":2,"impressingCost":0.03822},{"id":4,"name":"CREALITY CR10-S5","plateSize":"500 x 500 x 500","cleaningCost":2,"impressingCost":0.03822},{"id":3,"name":"ULTIMAKER S3","plateSize":"230 x 190 x 200","cleaningCost":2,"impressingCost":0.03822},{"id":2,"name":"CREALITY CR10-S5","plateSize":"500 x 500 x 500","cleaningCost":2,"impressingCost":0.03822},{"id":1,"name":"ULTIMAKER S3","plateSize":"230 x 190 x 200","cleaningCost":2,"impressingCost":0.03822}]
    * @responseBody 404 - { "errors": [ { "message": "Printers not found" } ] }
    */
-  async getAllPrinters({ response }): Promise<HttpContext> {
+  async getAllPrinters({ response }: HttpContext) {
     try {
       const printers = await this.printerService.getAllPrinters();
       return response.send(printers);
@@ -28,8 +28,8 @@ export default class PrinterController {
    * @responseBody 400 - { "errors": [ { "message": "Printer ID is required" } ] }
    * @responseBody 404 - { "errors": [ { "message": "Printer not found" } ] }
    */
-  async getPrinterById({ params, response }) {
-    const printerId = params.id;
+  async getPrinterById({ params, response }: HttpContext) {
+    const printerId: number = params.id;
     if (!printerId) {
       return response.status(400).send({ error: "Printer ID is required" });
     }
@@ -49,8 +49,8 @@ export default class PrinterController {
    * @responseBody 400 - { "errors": [ { "message": "Printer ID is required" } ] }
    * @responseBody 404 - { "errors": [ { "message": "Printer not found" } ] }
    */
-  async deletePrinter({ params, response }) {
-    const printerId = params.id;
+  async deletePrinter({ params, response }: HttpContext) {
+    const printerId: number = params.id;
 
     if (!printerId) {
       return response.status(400).send({ error: "Printer ID is required" });

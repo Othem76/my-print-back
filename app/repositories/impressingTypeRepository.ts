@@ -1,9 +1,7 @@
-import ImpressingTypePayload from "#models/impressingType/dto/impressingTypePayload";
+import ImpressingTypePayload from "#interfaces/impressingType/impressingTypePayload";
 import ImpressingType from "#models/impressingType/impressingType";
 import ImpressingTypeRepositoryInterface from "#repositoriesInterface/impressingTypeRepositoryInterface";
-import { inject } from "@adonisjs/core";
 
-@inject()
 export default class ImpressingTypeRepository
   implements ImpressingTypeRepositoryInterface
 {
@@ -24,6 +22,8 @@ export default class ImpressingTypeRepository
     return impressingTypeObj;
   }
   async deleteImpressingType(impressingTypeId: number): Promise<void> {
-    await ImpressingType.query().where("id", impressingTypeId).delete();
+    await ImpressingType.query()
+      .where({ impressingTypeId: impressingTypeId })
+      .delete();
   }
 }

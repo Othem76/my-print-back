@@ -1,6 +1,7 @@
 import MaterialService from "#services/materialService";
 import Material from "#models/material/material";
 import { inject } from "@adonisjs/core";
+import { HttpContext } from "@adonisjs/core/http";
 
 @inject()
 export default class MaterialController {
@@ -12,7 +13,7 @@ export default class MaterialController {
    * @responseBody 200 - [{"id":3,"name":"PETG","curaPrinterName":"PETG","grammePrize":35,"diameter":1.75,"color":"transparent"},{"id":2,"name":"ABS","curaPrinterName":"ABS","grammePrize":30,"diameter":1.75,"color":"black"}]
    * @responseBody 404 - { "errors": [ { "message": "Printers not found" } ] }
    */
-  async getAllMaterials({ response }) {
+  async getAllMaterials({ response }: HttpContext) {
     try {
       const materials: Material[] = await this.service.getAllMaterials();
       return response.send(materials);
@@ -28,8 +29,8 @@ export default class MaterialController {
    * @responseBody 400 - { "errors": [ { "message": "Printer ID is required" } ] }
    * @responseBody 404 - { "errors": [ { "message": "Printer not found" } ] }
    */
-  async getMaterialById({ params, response }) {
-    const materialId = params.id;
+  async getMaterialById({ params, response }: HttpContext) {
+    const materialId: number = params.id;
     if (!materialId) {
       return response.status(400).send({ error: "Material ID is required" });
     }
@@ -50,8 +51,8 @@ export default class MaterialController {
    * @responseBody 404 - { "errors": [ { "message": "No materials found for the given impressing type" } ] }
    * @responseBody 404 - { "errors": [ { "message": "The parameter must be an existing impressing type ID" } ] }
    */
-  async getMaterialByImpressingTypeId({ params, response }) {
-    const impressingTypeId = params.id;
+  async getMaterialByImpressingTypeId({ params, response }: HttpContext) {
+    const impressingTypeId: number = params.id;
     if (!impressingTypeId) {
       return response
         .status(400)
@@ -74,8 +75,8 @@ export default class MaterialController {
    * @responseBody 400 - { "errors": [ { "message": "Printer ID is required" } ] }
    * @responseBody 404 - { "errors": [ { "message": "Printer not found" } ] }
    */
-  async deleteMaterial({ params, response }) {
-    const materialId = params.id;
+  async deleteMaterial({ params, response }: HttpContext) {
+    const materialId: number = params.id;
 
     if (!materialId) {
       return response.status(400).send({ error: "Material ID is required" });

@@ -1,6 +1,7 @@
 import ImpressingTypeService from "#services/impressingTypeService";
 import { HttpContext } from "@adonisjs/core/http";
 import { inject } from "@adonisjs/core";
+import ImpressingTypePayload from "#interfaces/impressingType/impressingTypePayload";
 
 @inject()
 export default class ImpressingTypeController {
@@ -12,7 +13,7 @@ export default class ImpressingTypeController {
    * @responseBody 200 - [{"id":51,"type":"Material Extrusion"},{"id":50,"type":"Powder Bed Fusion"},{"id":49,"type":"Vat Photopolymerization"},{"id":48,"type":"Directed Energy Deposition"}]
    * @responseBody 404 - { "errors": [ { "message": "Impressing types not found" } ] }
    */
-  async getAllImpressingTypes({ response }): Promise<HttpContext> {
+  async getAllImpressingTypes({ response }: HttpContext) {
     const impressingTypes =
       await this.impressingTypeService.getAllImpressingTypes();
     return response.send(impressingTypes);
@@ -25,8 +26,8 @@ export default class ImpressingTypeController {
    * @responseBody 400 - { "errors": [ { "message": "Impressing type ID is required" } ] }
    * @responseBody 404 - { "errors": [ { "message": "Impressing type not found" } ] }
    */
-  async getImpressingTypeById({ params, response }): Promise<HttpContext> {
-    const impressingTypeId = params.id;
+  async getImpressingTypeById({ params, response }: HttpContext) {
+    const impressingTypeId: number = params.id;
     if (!impressingTypeId) {
       return response
         .status(400)
@@ -52,9 +53,11 @@ export default class ImpressingTypeController {
    * @responseBody 400 - { "errors": [ { "message": "Impressing type is required" } ] }
    * @responseBody 400 - { "errors": [ { "message": "Impressing type already exists" } ] }
    */
-  async createImpressingType({ request, response }): Promise<HttpContext> {
-    const type = request.only(["type"]);
-    if (!type) {
+  async createImpressingType({ request, response }: HttpContext) {
+    const impressingTypeParam: ImpressingTypePayload = request.only([
+      "type",
+    ]) as ImpressingTypePayload;
+    if (!impressingTypeParam) {
       return response
         .status(400)
         .send({ error: "Impressing type is required" });
@@ -62,7 +65,9 @@ export default class ImpressingTypeController {
 
     try {
       const impressingType =
-        await this.impressingTypeService.createImpressingType(type);
+        await this.impressingTypeService.createImpressingType(
+          impressingTypeParam.type
+        );
       return response.send(impressingType);
     } catch (error) {
       return response.status(400).send({ error: error.message });
@@ -76,8 +81,8 @@ export default class ImpressingTypeController {
    * @responseBody 400 - { "errors": [ { "message": "Impressing type ID is required" } ] }
    * @responseBody 404 - { "errors": [ { "message": "Impressing type not found" } ] }
    */
-  async deleteImpressingType({ params, response }): Promise<HttpContext> {
-    const impressingTypeId = params.id;
+  async deleteImpressingType({ params, response }: HttpContext) {
+    const impressingTypeId: number = params.id;
 
     if (!impressingTypeId) {
       return response
