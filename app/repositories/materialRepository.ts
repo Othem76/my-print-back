@@ -7,18 +7,28 @@ export default class MaterialRepository implements MaterialRepositoryInterface {
   async getAllMaterials(): Promise<Material[]> {
     return await Material.all();
   }
+
   async getMaterialById(materialId: number): Promise<Material> {
     return await Material.findOrFail(materialId);
   }
+
+  async getMaterialByImpressingTypeId(
+    impressingTypeId: number
+  ): Promise<Material[]> {
+    return await Material.query().where("impressing_type", impressingTypeId);
+  }
+
   createMaterial(material: CreateMaterialPayload): Promise<Material> {
     throw new Error("Method not implemented.");
   }
+
   updateMaterial(
     materialId: number,
     material: UpdateMaterialPayload
   ): Promise<Material> {
     throw new Error("Method not implemented.");
   }
+
   async deleteMaterial(materialId: number): Promise<void> {
     await Material.query().where("id", materialId).delete();
   }

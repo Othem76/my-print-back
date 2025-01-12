@@ -47,6 +47,10 @@ router.delete("printers/:id", [PrinterController, "deletePrinter"]);
 
 router.get("materials", [MaterialController, "getAllMaterials"]);
 router.get("materials/:id", [MaterialController, "getMaterialById"]);
+router.get("materials/impressingType/:id", [
+  MaterialController,
+  "getMaterialByImpressingTypeId",
+]);
 router.delete("materials/:id", [MaterialController, "deleteMaterial"]);
 
 router.get("impressingTypes", [
