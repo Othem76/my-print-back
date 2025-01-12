@@ -47,9 +47,10 @@ export default class ImpressingTypeController {
   /**
    * @createImpressingType
    * @description Create a impressing type
+   * @requestBody {"type":"SDD"}
    * @responseBody 200 - {"id":19,"type":"SDD"}
-   * @responseBody 400 - { "errors": [ { "message": "Impressing type ID is required" } ] }
-   * @responseBody 404 - { "errors": [ { "message": "Impressing type not found" } ] }
+   * @responseBody 400 - { "errors": [ { "message": "Impressing type is required" } ] }
+   * @responseBody 400 - { "errors": [ { "message": "Impressing type already exists" } ] }
    */
   async createImpressingType({ request, response }): Promise<HttpContext> {
     const type = request.only(["type"]);
