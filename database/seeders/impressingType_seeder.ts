@@ -5,58 +5,37 @@ export default class ImpressingTypeSeeder extends BaseSeeder {
   public async run() {
     await ImpressingType.createMany([
       {
-        type: "FDM",
+        type: "FDM", // Equivalent to Material Extrusion
       },
       {
-        type: "SLA",
+        type: "SLA", // Stereolithography
       },
       {
-        type: "SLS",
+        type: "SLS", // Selective Laser Sintering
       },
       {
-        type: "DLP",
+        type: "DLP", // Digital Light Processing
       },
       {
-        type: "Polyjet",
+        type: "Polyjet", // PolyJet printing
       },
       {
-        type: "Binder Jetting",
+        type: "Binder Jetting", // Binder Jetting process
       },
       {
-        type: "Material Jetting",
+        type: "Material Jetting", // Jetting materials
       },
       {
-        type: "Sheet Lamination",
+        type: "Sheet Lamination", // Lamination of sheets
       },
       {
-        type: "Directed Energy Deposition",
+        type: "Directed Energy Deposition", // Energy deposition process
       },
       {
-        type: "Vat Photopolymerization",
+        type: "Vat Photopolymerization", // Photopolymerization process
       },
       {
-        type: "Powder Bed Fusion",
-      },
-      {
-        type: "Material Extrusion",
-      },
-      {
-        type: "Material Jetting",
-      },
-      {
-        type: "Sheet Lamination",
-      },
-      {
-        type: "Directed Energy Deposition",
-      },
-      {
-        type: "Vat Photopolymerization",
-      },
-      {
-        type: "Powder Bed Fusion",
-      },
-      {
-        type: "Material Extrusion",
+        type: "Powder Bed Fusion", // Powder-based fusion
       },
     ]);
   }

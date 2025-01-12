@@ -42,7 +42,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.2712,
         diameter: 1.75,
         color: null,
-        impressingType: 2,
+        impressingType: 1,
       },
       {
         name: "Innofil ABS Fusion + Naturel Ø 1,75 mm",
@@ -50,7 +50,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.078,
         diameter: 1.75,
         color: "naturel",
-        impressingType: 3,
+        impressingType: 11,
       },
       {
         name: "Innofil ABS Silver Ø 1,75 mm",
@@ -58,7 +58,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.0404,
         diameter: 1.75,
         color: "silver",
-        impressingType: 3,
+        impressingType: 11,
       },
       {
         name: "Innofil ASA Ø 1,75 mm",
@@ -66,7 +66,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.0553,
         diameter: 1.75,
         color: null,
-        impressingType: 3,
+        impressingType: 11,
       },
       {
         name: "Innofil EPR PET White Ø 1,75 mm",
@@ -74,7 +74,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.046,
         diameter: 1.75,
         color: "white",
-        impressingType: 3,
+        impressingType: 11,
       },
       {
         name: "Innofil PLA BLACK Ø 1,75 mm",
@@ -82,7 +82,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.044,
         diameter: 1.75,
         color: "black",
-        impressingType: 3,
+        impressingType: 1,
       },
       {
         name: "Innofil PLA WHITE Ø 1,75 mm",
@@ -90,7 +90,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.044,
         diameter: 1.75,
         color: "white",
-        impressingType: 3,
+        impressingType: 1,
       },
       {
         name: "Innofil PLA YELLOW Ø 1,75 mm",
@@ -98,7 +98,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.0413,
         diameter: 1.75,
         color: "yellow",
-        impressingType: 3,
+        impressingType: 1,
       },
       {
         name: "Innofil PP White Ø 1,75 mm",
@@ -106,7 +106,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.0743,
         diameter: 1.75,
         color: "white",
-        impressingType: 3,
+        impressingType: 11,
       },
       {
         name: "Innoflex 45 Black Ø 1,75 mm",
@@ -114,7 +114,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.076,
         diameter: 1.75,
         color: "black",
-        impressingType: 3,
+        impressingType: 11,
       },
       {
         name: "MODELE ABS PLUS ivoire",
@@ -122,7 +122,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.4277,
         diameter: null,
         color: "ivoire",
-        impressingType: 4,
+        impressingType: 5,
       },
       {
         name: "MODELE AGILUS",
@@ -130,7 +130,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.45,
         diameter: null,
         color: null,
-        impressingType: 4,
+        impressingType: 5,
       },
       {
         name: "MODELE DURUS",
@@ -138,7 +138,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.4,
         diameter: null,
         color: null,
-        impressingType: 4,
+        impressingType: 5,
       },
       {
         name: "MODELE TANGOBLACKPLUS",
@@ -146,7 +146,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.45,
         diameter: null,
         color: "black",
-        impressingType: 4,
+        impressingType: 5,
       },
       {
         name: "MODELE TANGOGREY",
@@ -154,7 +154,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.45,
         diameter: null,
         color: "grey",
-        impressingType: 4,
+        impressingType: 5,
       },
       {
         name: "MODELE VERO CYAN",
@@ -162,7 +162,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.34,
         diameter: null,
         color: "cyan",
-        impressingType: 4,
+        impressingType: 5,
       },
       {
         name: "MODELE VERO MAGENTA",
@@ -170,7 +170,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.34,
         diameter: null,
         color: "magenta",
-        impressingType: 4,
+        impressingType: 5,
       },
       {
         name: "MODELE VERO YELLOW",
@@ -178,7 +178,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.34,
         diameter: null,
         color: "yellow",
-        impressingType: 4,
+        impressingType: 5,
       },
       {
         name: "MODELE VEROWHITE PLUS RGD835",
@@ -186,7 +186,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.2583,
         diameter: null,
         color: "white",
-        impressingType: 4,
+        impressingType: 5,
       },
       {
         name: "Renkforce PLA Blue Ø 1,75 mm",
@@ -194,7 +194,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.034,
         diameter: 1.75,
         color: "blue",
-        impressingType: 5,
+        impressingType: 1,
       },
       {
         name: "Renkforce PLA RED Ø 1,75 mm",
@@ -202,7 +202,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.034,
         diameter: 1.75,
         color: "red",
-        impressingType: 5,
+        impressingType: 1,
       },
       {
         name: "SUPPORT FULLCURE 705",
@@ -226,7 +226,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.031,
         diameter: 1.75,
         color: "green",
-        impressingType: 7,
+        impressingType: 1,
       },
       {
         name: "Ultimaker PLA WHITE Ø 2,85 mm",
@@ -234,7 +234,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.044,
         diameter: 2.85,
         color: "white",
-        impressingType: 8,
+        impressingType: 1,
       },
       {
         name: "Ultimaker PLA RED Ø 2,85 mm",
@@ -242,7 +242,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.044,
         diameter: 2.85,
         color: "red",
-        impressingType: 8,
+        impressingType: 1,
       },
       {
         name: "Ultimaker PLA BLUE Ø 2,85 mm",
@@ -250,7 +250,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.0413,
         diameter: 2.85,
         color: "blue",
-        impressingType: 8,
+        impressingType: 1,
       },
       {
         name: "Ultimaker PLA GREEN Ø 2,85 mm",
@@ -258,7 +258,7 @@ export default class MaterialSeeder extends BaseSeeder {
         grammePrize: 0.034,
         diameter: 2.85,
         color: "green",
-        impressingType: 8,
+        impressingType: 1,
       },
     ]);
   }
