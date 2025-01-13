@@ -1,4 +1,5 @@
 import CreateFileHistoryPayload from "#interfaces/fileHistory/createFileHistoryPayload";
+import { HistoryStatus } from "#interfaces/fileHistory/historyStatus";
 import UpdateFileHistoryPayload from "#interfaces/fileHistory/updateFileHistoryPayload";
 import FileHistory from "#models/fileHistory/fileHistory";
 import FileHistoryRepository from "#repositories/fileHistoryRepository";
@@ -21,6 +22,7 @@ export default class FileHistoryService {
   }
 
   async createHistory(historyPayload: CreateFileHistoryPayload): Promise<FileHistory> {
+    historyPayload.status = HistoryStatus.Pending;
     return await this.repository.createHistory(historyPayload);
   }
 

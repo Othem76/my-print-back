@@ -3,23 +3,23 @@ import { DateTime } from "luxon";
 
 export default class FileHistory extends BaseModel {
   @column({ isPrimary: true })
-  public id: number
+  public id!: number
 
   @column()
-  public fileOriginalName: string
+  public fileOriginalName!: string
 
   @column()
-  public fileServerName: string
+  public fileServerName!: string
 
   @column()
-  public userId: number
+  public userId!: number
 
   @column()
-  public status: string
+  public status!: string
 
   @column.dateTime({ autoCreate: true })
-  public uploadedAt: DateTime
+  public uploadedAt!: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime | null
+  public updatedAt!: DateTime | null
 }
