@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.string('file_original_name').notNullable()
       table.string('file_server_name').notNullable().unique()
       table.integer('user_id').notNullable()
+      table.string('status').notNullable()
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

@@ -14,6 +14,9 @@ export default class FileHistory extends BaseModel {
   @column()
   public userId: number
 
+  @column()
+  public status: string
+
   @column.dateTime({ autoCreate: true })
   public uploadedAt: DateTime
 
