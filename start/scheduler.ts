@@ -1,20 +1,19 @@
 import scheduler from 'adonisjs-scheduler/services/main'
+import { FILE_UPLOAD_DIRECTORY } from 'app/utils/consts.js';
 import fs from 'fs'
 import path from 'path'
 
 scheduler.call(() => {
     console.log("Deleting all temporary files...");
 
-    const uploadsFolder = "storage/uploads";
-
-    fs.readdir(uploadsFolder, (err, files) => {
+    fs.readdir(FILE_UPLOAD_DIRECTORY, (err, files) => {
         if (err) {
             console.error(`Error reading the folder: ${err.message}`);
             return;
         }
 
         files.forEach(file => {
-            const filePath = path.join(uploadsFolder, file);
+            const filePath = path.join(FILE_UPLOAD_DIRECTORY, file);
             
             fs.unlink(filePath, (unlinkErr) => {
                 if (unlinkErr) {
