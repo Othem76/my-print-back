@@ -2,8 +2,13 @@ import { HttpContext } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
 import { cuid } from '@adonisjs/core/helpers'
 import MultipartFile from '@adonisjs/bodyparser'
+import { FILE_UPLOAD_DIRECTORY } from 'app/utils/consts.js'
+import CreateFileHistoryPayload from '#interfaces/fileHistory/createFileHistoryPayload'
+import FileHistoryService from '#services/fileHistoryService'
 
 export default class StlController {  
+  constructor(private fileHistoryService: FileHistoryService) {}
+
   /**
    * @uploadOne
    * @description Upload a single STL file and store it in the storage/uploads directory
@@ -47,9 +52,20 @@ export default class StlController {
       })
     }
 
-    await file.move(app.makePath('storage/uploads'), {
-      name: `${cuid()}.stl`
+    // Creating file history
+    const fileServerName: string = `${cuid()}.stl`;
+    const fileHistoryPayload: CreateFileHistoryPayload = {
+      fileOriginalName: file.clientName,
+      fileServerName: fileServerName,
+      userId: 1, // TODO: Get the user ID from the request
+    }
+
+    await file.move(app.makePath(FILE_UPLOAD_DIRECTORY), {
+      name: fileServerName
     })
+
+    // File history creation
+    await this.fileHistoryService.createHistory(fileHistoryPayload)
 
     return response.ok({ message: 'Fichier uploadé avec succès.' })
   }
@@ -102,9 +118,19 @@ export default class StlController {
 
     // Files storage
     for (let file of files) {
-      await file.move(app.makePath('storage/uploads'), {
-        name: `${cuid()}.stl`
+      // Creating file history
+      const fileServerName: string = `${cuid()}.stl`;
+      const fileHistoryPayload: CreateFileHistoryPayload = {
+        fileOriginalName: file.clientName,
+        fileServerName: fileServerName,
+        userId: 1, // TODO: Get the user ID from the request
+      }
+
+      await file.move(app.makePath(FILE_UPLOAD_DIRECTORY), {
+        name: fileServerName
       })
+
+      await this.fileHistoryService.createHistory(fileHistoryPayload)
     }
 
     return response.ok({ message: 'Tout les fichiers uploadés avec succès.' })
