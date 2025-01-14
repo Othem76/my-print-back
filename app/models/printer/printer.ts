@@ -8,7 +8,7 @@ export default class Printer extends BaseModel {
   declare name: string | null;
 
   @column()
-  declare materialType: number;
+  declare materialTypes: number[];
 
   @column()
   declare curaPrinterName: string | null;
