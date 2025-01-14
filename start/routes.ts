@@ -1,10 +1,11 @@
 import router from "@adonisjs/core/services/router";
 import AutoSwagger from "adonis-autoswagger";
 import swagger from "#config/swagger";
+import { middleware } from './kernel.js'
 
-const UserController = () => import("#controllers/user/userController");
 const StlController = () => import("#controllers/stl/stlController");
 const CostController = () => import("#controllers/cost/costController");
+const AuthController = () => import("#controllers/auth_controller");
 const QuoteController = () => import("#controllers/quote/quoteController");
 
 // To get swagger in YAML
@@ -21,12 +22,21 @@ router.get("/", async () => {
   //return AutoSwagger.default.rapidoc("/swagger", "view");
 });
 
-router.get("users", [UserController, "getAll"]);
-router.get("users/:id", [UserController, "getUserById"]);
-router.get("users/by-email", [UserController, "getUserByEmail"]);
-router.post("users", [UserController, "create"]);
-router.put("users", [UserController, "update"]);
-router.delete("users/:id", [UserController, "delete"]);
+router.group(() => {
+  router.post('register', [AuthController, 'register'])
+  router.post('login', [AuthController, 'login'])
+  // router.get('me', async ({ auth, response }) => {
+  //   try {
+  //     const user = auth.getUserOrFail()
+  //     return response.ok(user)
+  //   } catch (error) {
+  //     return response.unauthorized({ error: 'User not found' })
+  //   }
+  // })
+  // .use(middleware.auth())
+  router.get('me', [AuthController, 'me']).use(middleware.auth())
+  router.post('logout', [AuthController, 'logout']).use(middleware.auth())
+}).prefix('user')
 
 router.post("uploadOne", [StlController, "uploadOne"]);
 router.post("uploadMany", [StlController, "uploadMany"]);
