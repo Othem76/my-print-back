@@ -13,9 +13,9 @@ export default class MaterialRepository implements MaterialRepositoryInterface {
   }
 
   async getMaterialByImpressingTypeId(
-    impressingTypeId: number
+    materialTypeId: number
   ): Promise<Material[]> {
-    return await Material.query().where({ impressing_type: impressingTypeId });
+    return await Material.query().where({ type: materialTypeId });
   }
 
   createMaterial(material: CreateMaterialPayload): Promise<Material> {

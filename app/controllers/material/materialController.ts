@@ -44,24 +44,24 @@ export default class MaterialController {
   }
 
   /**
-   * @getMaterialByImpressingTypeId
-   * @description Get a material by impressing type ID
+   * @getMaterialByMaterialTypeId
+   * @description Get a material by material type ID
    * @responseBody 200 - [{"id":1,"name":"ABS X130 apple green","curaPrinterName":"ABS X130 apple green","grammePrize":0.2245,"diameter":1.75,"color":"apple green","impressingType":1},{"id":1,"name":"ABS X130 apple green","curaPrinterName":"ABS X130 apple green","grammePrize":0.2245,"diameter":1.75,"color":"apple green","impressingType":1}]
-   * @responseBody 400 - { "errors": [ { "message": "Impressing type ID is required" } ] }
-   * @responseBody 404 - { "errors": [ { "message": "No materials found for the given impressing type" } ] }
-   * @responseBody 404 - { "errors": [ { "message": "The parameter must be an existing impressing type ID" } ] }
+   * @responseBody 400 - { "errors": [ { "message": "Material type ID is required" } ] }
+   * @responseBody 404 - { "errors": [ { "message": "No materials found for the given material type" } ] }
+   * @responseBody 404 - { "errors": [ { "message": "The parameter must be an existing material type ID" } ] }
    */
-  async getMaterialByImpressingTypeId({ params, response }: HttpContext) {
-    const impressingTypeId: number = params.id;
-    if (!impressingTypeId) {
+  async getMaterialByMaterialTypeId({ params, response }: HttpContext) {
+    const materialTypeId: number = params.id;
+    if (!materialTypeId) {
       return response
         .status(400)
-        .send({ error: "Impressing type ID is required" });
+        .send({ error: "Material type ID is required" });
     }
 
     try {
       const materials =
-        await this.service.getMaterialByImpressingTypeId(impressingTypeId);
+        await this.service.getMaterialByMaterialTypeId(materialTypeId);
       return response.send(materials);
     } catch (error) {
       return response.status(404).send({ error: error.message });

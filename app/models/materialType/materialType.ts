@@ -1,6 +1,6 @@
 import { BaseModel, column } from "@adonisjs/lucid/orm";
 
-export default class impressingType extends BaseModel {
+export default class MaterialType extends BaseModel {
   @column({ isPrimary: true })
   declare id: number;
 

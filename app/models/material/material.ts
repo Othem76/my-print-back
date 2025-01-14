@@ -8,7 +8,7 @@ export default class Material extends BaseModel {
   declare name: string | null;
 
   @column()
-  declare impressingType: number;
+  declare type: number;
 
   @column()
   declare curaMaterialId: string | null;

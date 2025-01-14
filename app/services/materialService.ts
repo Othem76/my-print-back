@@ -1,17 +1,14 @@
 import MaterialRepository from "#repositories/materialRepository";
 import Material from "#models/material/material";
 import { inject } from "@adonisjs/core";
-import ImpressingTypeRepository from "#repositories/impressingTypeRepository";
+import MaterialTypeRepository from "#repositories/impressingTypeRepository";
 import { InvalidArgumentsException } from "@adonisjs/core/exceptions";
-import ImpressingType from "#models/impressingType/impressingType";
-import { isUndefined } from "util";
-import { isEmptyObject, isNull } from "@sindresorhus/is";
 
 @inject()
 export default class MaterialService {
   constructor(
     private readonly repository: MaterialRepository,
-    private impressingTypeRepository: ImpressingTypeRepository
+    private materialTypeRepository: MaterialTypeRepository
   ) {}
 
   async getAllMaterials(): Promise<Material[]> {
@@ -22,13 +19,11 @@ export default class MaterialService {
     return await this.repository.getMaterialById(materialId);
   }
 
-  async getMaterialByImpressingTypeId(
-    impressingTypeId: number
+  async getMaterialByMaterialTypeId(
+    materialTypeId: number
   ): Promise<Material[]> {
     try {
-      await this.impressingTypeRepository.getImpressingTypeById(
-        impressingTypeId
-      );
+      await this.materialTypeRepository.getMaterialTypeById(materialTypeId);
     } catch (error) {
       throw new InvalidArgumentsException(
         "The parameter must be an existing impressing type ID"
@@ -36,11 +31,11 @@ export default class MaterialService {
     }
 
     const materials =
-      await this.repository.getMaterialByImpressingTypeId(impressingTypeId);
+      await this.repository.getMaterialByImpressingTypeId(materialTypeId);
 
     if (!materials || materials.length === 0) {
       throw new InvalidArgumentsException(
-        "No materials found for the given impressing type"
+        "No materials found for the given material type"
       );
     }
 

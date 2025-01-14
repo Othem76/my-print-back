@@ -10,8 +10,8 @@ const PrinterController = () =>
   import("#controllers/printer/printerController");
 const MaterialController = () =>
   import("#controllers/material/materialController");
-const ImpressingTypeController = () =>
-  import("#controllers/impressingType/impressingTypeController");
+const MaterialTypeController = () =>
+  import("#controllers/materialType/materialTypeController");
 
 // To get swagger in YAML
 router.get("/swagger", async () => {
@@ -46,25 +46,19 @@ router.delete("printers/:id", [PrinterController, "deletePrinter"]);
 
 router.get("materials", [MaterialController, "getAllMaterials"]);
 router.get("materials/:id", [MaterialController, "getMaterialById"]);
-router.get("materials/impressingType/:id", [
+router.get("materials/materialType/:id", [
   MaterialController,
-  "getMaterialByImpressingTypeId",
+  "getMaterialByMaterialTypeId",
 ]);
 router.delete("materials/:id", [MaterialController, "deleteMaterial"]);
 
-router.get("impressingTypes", [
-  ImpressingTypeController,
-  "getAllImpressingTypes",
+router.get("materialTypes", [MaterialTypeController, "getAllMaterialTypes"]);
+router.get("materialTypes/:id", [
+  MaterialTypeController,
+  "getMaterialTypeById",
 ]);
-router.get("impressingTypes/:id", [
-  ImpressingTypeController,
-  "getImpressingTypeById",
-]);
-router.post("impressingTypes", [
-  ImpressingTypeController,
-  "createImpressingType",
-]);
-router.delete("impressingTypes/:id", [
-  ImpressingTypeController,
-  "deleteImpressingType",
+router.post("materialTypes", [MaterialTypeController, "createMaterialType"]);
+router.delete("materialTypes/:id", [
+  MaterialTypeController,
+  "deleteMaterialType",
 ]);

@@ -1,32 +1,28 @@
-import ImpressingType from "#models/impressingType/impressingType";
-import ImpressingTypeRepository from "#repositories/impressingTypeRepository";
+import MaterialType from "#models/materialType/materialType";
+import MaterialTypeRepository from "#repositories/impressingTypeRepository";
 import { inject } from "@adonisjs/core";
 
 @inject()
-export default class ImpressingTypeService {
+export default class MaterialTypeService {
   constructor(
-    private readonly impressingTypeRepository: ImpressingTypeRepository
+    private readonly materialTypeRepository: MaterialTypeRepository
   ) {}
 
-  async getAllImpressingTypes(): Promise<ImpressingType[]> {
-    return await this.impressingTypeRepository.getAllImpressingTypes();
+  async getAllMaterialTypes(): Promise<MaterialType[]> {
+    return await this.materialTypeRepository.getAllMaterialTypes();
   }
 
-  async getImpressingTypeById(
-    impressingTypeId: number
-  ): Promise<ImpressingType> {
-    return await this.impressingTypeRepository.getImpressingTypeById(
-      impressingTypeId
+  async getMaterialTypeById(materialTypeId: number): Promise<MaterialType> {
+    return await this.materialTypeRepository.getMaterialTypeById(
+      materialTypeId
     );
   }
 
-  async createImpressingType(type: string): Promise<ImpressingType> {
-    return await this.impressingTypeRepository.createImpressingType(type);
+  async createMaterialType(type: string): Promise<MaterialType> {
+    return await this.materialTypeRepository.createMaterialType({ type });
   }
 
-  async deleteImpressingType(impressingTypeId: number): Promise<void> {
-    return await this.impressingTypeRepository.deleteImpressingType(
-      impressingTypeId
-    );
+  async deleteMaterialType(materialTypeId: number): Promise<void> {
+    return await this.materialTypeRepository.deleteMaterialType(materialTypeId);
   }
 }

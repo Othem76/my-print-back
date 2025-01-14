@@ -1,29 +1,23 @@
-import ImpressingTypePayload from "#interfaces/impressingType/impressingTypePayload";
-import ImpressingType from "#models/impressingType/impressingType";
-import ImpressingTypeRepositoryInterface from "#repositoriesInterface/impressingTypeRepositoryInterface";
+import MaterialTypePayload from "#interfaces/materialType/materialTypePayload";
+import MaterialType from "#models/materialType/materialType";
+import MaterialTypeRepositoryInterface from "#repositoriesInterface/materialTypeRepositoryInterface";
 
-export default class ImpressingTypeRepository
-  implements ImpressingTypeRepositoryInterface
+export default class MaterialTypeRepository
+  implements MaterialTypeRepositoryInterface
 {
-  async getAllImpressingTypes(): Promise<ImpressingType[]> {
-    return await ImpressingType.all();
+  async getAllMaterialTypes(): Promise<MaterialType[]> {
+    return await MaterialType.all();
   }
-  async getImpressingTypeById(
-    impressingTypeId: number
-  ): Promise<ImpressingType> {
-    return await ImpressingType.findOrFail(impressingTypeId);
+  async getMaterialTypeById(materialTypeId: number): Promise<MaterialType> {
+    return await MaterialType.findOrFail(materialTypeId);
   }
-  async createImpressingType(
-    impressingTypePayload: ImpressingTypePayload
-  ): Promise<ImpressingType> {
-    const impressingTypeObj = await ImpressingType.create(
-      impressingTypePayload
-    );
-    return impressingTypeObj;
+  async createMaterialType(
+    materialTypePayload: MaterialTypePayload
+  ): Promise<MaterialType> {
+    const materialTypeObj = await MaterialType.create(materialTypePayload);
+    return materialTypeObj;
   }
-  async deleteImpressingType(impressingTypeId: number): Promise<void> {
-    await ImpressingType.query()
-      .where({ impressingTypeId: impressingTypeId })
-      .delete();
+  async deleteMaterialType(materialTypeId: number): Promise<void> {
+    await MaterialType.query().where({ id: materialTypeId }).delete();
   }
 }

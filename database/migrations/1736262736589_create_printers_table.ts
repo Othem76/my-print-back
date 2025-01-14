@@ -11,7 +11,7 @@ export default class extends BaseSchema {
       table.string("plate_size").nullable();
       table.integer("cleaning_cost").notNullable();
       table.float("impressing_cost").notNullable();
-      table.integer("supported_impressing_type").notNullable();
+      table.integer("material_type").notNullable();
     });
   }
 

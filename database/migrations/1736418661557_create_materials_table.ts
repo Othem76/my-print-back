@@ -11,7 +11,7 @@ export default class extends BaseSchema {
       table.float("gramme_prize").notNullable();
       table.float("diameter").nullable();
       table.string("color").nullable();
-      table.integer("impressing_type").notNullable();
+      table.integer("type").notNullable();
     });
   }
 
