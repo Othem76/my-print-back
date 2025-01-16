@@ -21,6 +21,6 @@ export default class FileHistoryRepository implements FileHistoryRepositoryInter
   }
 
   async updateHistory(historyPayload: UpdateFileHistoryPayload): Promise<FileHistory> {
-    return FileHistory.updateOrCreate({ id: historyPayload.id }, historyPayload);
+    return FileHistory.updateOrCreate({ id: historyPayload.id }, { status: historyPayload.status });
   }
 }
