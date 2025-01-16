@@ -2,10 +2,13 @@ import { HttpContext } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
 import { cuid } from '@adonisjs/core/helpers'
 import MultipartFile from '@adonisjs/bodyparser'
-import { FILE_UPLOAD_DIRECTORY } from 'app/utils/consts.js'
+import { FILE_UPLOAD_DIRECTORY } from '../../utils/consts.js'
 import CreateFileHistoryPayload from '#interfaces/fileHistory/createFileHistoryPayload'
 import FileHistoryService from '#services/fileHistoryService'
+import User from '#models/user/user'
+import { inject } from '@adonisjs/core'
 
+@inject()
 export default class StlController {  
   constructor(private fileHistoryService: FileHistoryService) {}
 
@@ -16,7 +19,7 @@ export default class StlController {
    * @responseBody 400 - { "errors": [ { "message": "The file must be a STL file" } ] }
    * @requestFormDataBody {"stlFile":{"type":"File","format":"stl","description":"The STL file to upload"}}
    */
-  async uploadOne({ request, response }: HttpContext) {
+  async uploadOne({ auth, request, response }: HttpContext) {
     const file: MultipartFile = request.file('stlFile')
 
     if (!file) {
@@ -52,12 +55,14 @@ export default class StlController {
       })
     }
 
+    const user: User = auth.getUserOrFail()
+
     // Creating file history
     const fileServerName: string = `${cuid()}.stl`;
     const fileHistoryPayload: CreateFileHistoryPayload = {
       fileOriginalName: file.clientName,
       fileServerName: fileServerName,
-      userId: 1, // TODO: Get the user ID from the request
+      userId: user.id
     }
 
     await file.move(app.makePath(FILE_UPLOAD_DIRECTORY), {
@@ -76,7 +81,7 @@ export default class StlController {
    * @responseBody 200 - { "message": "Tout les fichiers uploadés avec succès." }
    * @responseBody 400 - { "errors": [ { "message": "No file uploaded" } ] } 
    */
-  async uploadMany({ request, response }: HttpContext) {
+  async uploadMany({ auth, request, response }: HttpContext) {
     const files: MultipartFile[] = request.files('stlFiles', {
       extnames: ['stl'],
     })
@@ -116,6 +121,8 @@ export default class StlController {
       }
     }
 
+    const user: User = auth.getUserOrFail()
+
     // Files storage
     for (let file of files) {
       // Creating file history
@@ -123,7 +130,7 @@ export default class StlController {
       const fileHistoryPayload: CreateFileHistoryPayload = {
         fileOriginalName: file.clientName,
         fileServerName: fileServerName,
-        userId: 1, // TODO: Get the user ID from the request
+        userId: user.id
       }
 
       await file.move(app.makePath(FILE_UPLOAD_DIRECTORY), {

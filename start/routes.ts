@@ -25,21 +25,12 @@ router.get("/", async () => {
 router.group(() => {
   router.post('register', [AuthController, 'register'])
   router.post('login', [AuthController, 'login'])
-  // router.get('me', async ({ auth, response }) => {
-  //   try {
-  //     const user = auth.getUserOrFail()
-  //     return response.ok(user)
-  //   } catch (error) {
-  //     return response.unauthorized({ error: 'User not found' })
-  //   }
-  // })
-  // .use(middleware.auth())
   router.get('me', [AuthController, 'me']).use(middleware.auth())
   router.post('logout', [AuthController, 'logout']).use(middleware.auth())
 }).prefix('user')
 
-router.post("uploadOne", [StlController, "uploadOne"]);
-router.post("uploadMany", [StlController, "uploadMany"]);
+router.post("uploadOne", [StlController, "uploadOne"]).use(middleware.auth());
+router.post("uploadMany", [StlController, "uploadMany"]).use(middleware.auth());
 
 router.post("costs", [CostController]);
 router.post("quotes/generate-pdf", [QuoteController, "generatePdf"]);
