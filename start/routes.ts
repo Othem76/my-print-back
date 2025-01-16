@@ -6,12 +6,8 @@ const UserController = () => import("#controllers/user/userController");
 const StlController = () => import("#controllers/stl/stlController");
 const CostController = () => import("#controllers/cost/costController");
 const QuoteController = () => import("#controllers/quote/quoteController");
-const PrinterController = () =>
-  import("#controllers/printer/printerController");
-const MaterialController = () =>
-  import("#controllers/material/materialController");
-const MaterialTypeController = () =>
-  import("#controllers/materialType/materialTypeController");
+const PrinterController = () => import("#controllers/printer/printerController");
+const MaterialController = () => import("#controllers/material/materialController");
 
 // To get swagger in YAML
 router.get("/swagger", async () => {
@@ -51,14 +47,3 @@ router.get("materials/materialType/:id", [
   "getMaterialByMaterialTypeId",
 ]);
 router.delete("materials/:id", [MaterialController, "deleteMaterial"]);
-
-router.get("materialTypes", [MaterialTypeController, "getAllMaterialTypes"]);
-router.get("materialTypes/:id", [
-  MaterialTypeController,
-  "getMaterialTypeById",
-]);
-router.post("materialTypes", [MaterialTypeController, "createMaterialType"]);
-router.delete("materialTypes/:id", [
-  MaterialTypeController,
-  "deleteMaterialType",
-]);

@@ -1,7 +1,6 @@
 export default interface CreateMaterialPayload {
-  name?: string;
-  curaPrinterName: string;
+  name: string;
   diameter: number;
-  color: string;
   grammePrize: number;
+  type?: string;
 }

@@ -1,21 +1,19 @@
 import { BaseSchema } from "@adonisjs/lucid/schema";
 
 export default class extends BaseSchema {
-  protected tableName = "materials";
+  protected tableName = "material";
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments("id");
-      table.string("name").nullable();
-      table.string("cura_material_id").nullable();
+      table.uuid("id").primary();
+      table.string("name").notNullable();
       table.float("gramme_prize").notNullable();
-      table.float("diameter").nullable();
-      table.string("color").nullable();
-      table.integer("type").notNullable();
+      table.float("diameter").notNullable();
+      table.string("type").nullable();
     });
   }
 
   async down() {
-    this.schema.dropTable(this.tableName);
+    this.schema.dropTableIfExists(this.tableName);
   }
 }

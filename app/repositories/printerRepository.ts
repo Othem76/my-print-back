@@ -5,7 +5,7 @@ import PrinterRepositoryInterface from "#repositoriesInterface/printerRepository
 
 export default class printerRepository implements PrinterRepositoryInterface {
   async getAllPrinters(): Promise<Printer[]> {
-    return await Printer.all();
+    return await Printer.query().preload('materials');
   }
   async getPrinterById(printerId: number): Promise<Printer> {
     return await Printer.findOrFail(printerId);

@@ -3,6 +3,7 @@ FROM node:20.17
 WORKDIR /api
 
 COPY entrypoint.sh /entrypoint.sh
+
 RUN chmod +x /entrypoint.sh
 
 COPY package*.json ./
@@ -13,5 +14,4 @@ COPY . .
 
 EXPOSE 3333
 
-
-CMD ["/entrypoint.sh"]
+ENTRYPOINT ["sh", "/entrypoint.sh"]

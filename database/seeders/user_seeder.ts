@@ -4,6 +4,10 @@ import Hash from "@adonisjs/core/services/hash";
 
 export default class UserSeeder extends BaseSeeder {
   public async run() {
+    if ((await User.all()).length > 0) {
+      return;
+    }
+
     await User.createMany([
       {
         fullName: "John Doe",

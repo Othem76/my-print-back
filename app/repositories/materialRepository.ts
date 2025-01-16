@@ -4,18 +4,15 @@ import Material from "#models/material/material";
 import MaterialRepositoryInterface from "#repositoriesInterface/materialRepositoryInterface";
 
 export default class MaterialRepository implements MaterialRepositoryInterface {
+  getMaterialByImpressingTypeId(impressingTypeId: number): Promise<Material[]> {
+    throw new Error("Method not implemented.");
+  }
   async getAllMaterials(): Promise<Material[]> {
     return await Material.all();
   }
 
   async getMaterialById(materialId: number): Promise<Material> {
     return await Material.findOrFail(materialId);
-  }
-
-  async getMaterialByImpressingTypeId(
-    materialTypeId: number
-  ): Promise<Material[]> {
-    return await Material.query().where({ type: materialTypeId });
   }
 
   createMaterial(material: CreateMaterialPayload): Promise<Material> {
