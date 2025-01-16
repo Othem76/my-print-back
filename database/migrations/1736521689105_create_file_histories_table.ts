@@ -11,7 +11,7 @@ export default class extends BaseSchema {
       table.integer('user_id').notNullable()
       table.string('status').notNullable()
 
-      table.timestamp('created_at')
+      table.timestamp('uploaded_at')
       table.timestamp('updated_at')
     })
   }
