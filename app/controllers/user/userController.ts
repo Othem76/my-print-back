@@ -4,6 +4,11 @@ import UserService from "#services/userService";
 import CreateUserPayload from "#interfaces/user/createUserPayload.js";
 import UpdateUserPayload from "#interfaces/user/updateUserPayload.js";
 
+
+/**
+ * LEGACY CONTROLLER WAITING FOR DELETE
+ */
+
 @inject()
 export default class UserController {
   constructor(private userService: UserService) {}
