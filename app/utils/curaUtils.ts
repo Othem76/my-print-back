@@ -1,5 +1,3 @@
-import { override } from "cura-wasm/dist/types";
-
 interface CuraResponse {
   flavor: String;
   printTime: number;
@@ -18,7 +16,7 @@ function convertToArrayBuffer(buffer: Buffer): ArrayBuffer {
   return arrayBuffer;
 }
 
-const DefaultCuraSettings: override[] = [
+/*const DefaultCuraSettings: override[] = [
   {
     scope: "e0",
     key: "roofing_layer_count",
@@ -69,7 +67,7 @@ const DefaultCuraSettings: override[] = [
     key: "material_guid",
     value: "e0f1d581-cc6b-4e36-8f3c-3f5601ecba5f",
   },
-];
+];*/
 
 export default CuraResponse;
-export { DefaultCuraSettings, convertToArrayBuffer };
+export { convertToArrayBuffer };

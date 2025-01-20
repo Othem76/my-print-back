@@ -52,9 +52,8 @@ export default class CostService {
     return (time / 3600) * cleaningCost;
   }
 
-  getElectricityCost(time: number, power: number) {
+  getElectricityCost(time: number) {
     const electricityCost = 0.4939;
-    //return ((time * power) / 1000) * electricityCost; ????????????????
     return (time / 3600) * electricityCost;
   }
 
@@ -92,8 +91,7 @@ export default class CostService {
 
     const cleaningCost = this.getCleaningCost(3600); //TODO
     const electricityCost = this.getElectricityCost(
-      results.printTime,
-      300 //TODO
+      results.printTime
     );
 
     const totalCost = this.getTotalCost(
