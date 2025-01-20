@@ -1,58 +1,16 @@
 import { HttpContext } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
-import { cuid } from '@adonisjs/core/helpers'
 import { MultipartFile } from '@adonisjs/bodyparser'
+import { FILE_UPLOAD_DIRECTORY } from '../../utils/consts.js'
+import CreateFileHistoryPayload from '#interfaces/fileHistory/createFileHistoryPayload'
+import FileHistoryService from '#services/fileHistoryService'
+import User from '#models/user/user'
+import { inject } from '@adonisjs/core'
+import { v4 as uuidv4 } from "uuid";
 
+@inject()
 export default class StlController {
-  /**
-   * @uploadOne
-   * @description Upload a single STL file and store it in the storage/uploads directory
-   * @responseBody 200 - { "message": "Fichier uploadé avec succès." }
-   * @responseBody 400 - { "errors": [ { "message": "The file must be a STL file" } ] }
-   * @requestFormDataBody {"stlFile":{"type":"File","format":"stl","description":"The STL file to upload"}}
-   */
-  async uploadOne({ request, response }: HttpContext) {
-    const file: MultipartFile | null = request.file('stlFile')
-
-    if (!file) {
-      return response.status(400).send({
-        errors: [
-          {
-            message: 'No file uploaded'
-          }
-        ]
-      })
-    }
-
-    // Type verification
-    if (file.extname && file.extname !== 'stl') {
-      return response.status(400).send({
-        errors: [
-          {
-            message: 'The file must be a STL file'
-          }
-        ]
-      })
-    }
-
-    // Alternative type verification
-    const extension = file.clientName.split('.').pop()?.toLocaleLowerCase()
-    if (extension !== 'stl') {
-      return response.status(400).send({
-        errors: [
-          {
-            message: 'The file must be a STL file'
-          }
-        ]
-      })
-    }
-
-    await file.move(app.makePath('storage/uploads'), {
-      name: `${cuid()}.stl`
-    })
-
-    return response.ok({ message: 'Fichier uploadé avec succès.' })
-  }
+  constructor(private fileHistoryService: FileHistoryService) {}
 
   /**
    * @uploadMany
@@ -60,7 +18,7 @@ export default class StlController {
    * @responseBody 200 - { "message": "Tout les fichiers uploadés avec succès." }
    * @responseBody 400 - { "errors": [ { "message": "No file uploaded" } ] }
    */
-  async uploadMany({ request, response }: HttpContext) {
+  async uploadMany({ auth, request, response }: HttpContext) {
     const files: MultipartFile[] = request.files('stlFiles', {
       extnames: ['stl'],
     })
@@ -100,11 +58,23 @@ export default class StlController {
       }
     }
 
+    const user: User = auth.getUserOrFail()
+
     // Files storage
     for (let file of files) {
-      await file.move(app.makePath('storage/uploads'), {
-        name: `${cuid()}.stl`
+      // Creating file history
+      const fileServerName: string = `${uuidv4()}.stl`;
+      const fileHistoryPayload: CreateFileHistoryPayload = {
+        fileOriginalName: file.clientName,
+        fileServerName: fileServerName,
+        userId: user.id
+      }
+
+      await file.move(app.makePath(FILE_UPLOAD_DIRECTORY), {
+        name: fileServerName
       })
+
+      await this.fileHistoryService.createHistory(fileHistoryPayload)
     }
 
     return response.ok({ message: 'Tout les fichiers uploadés avec succès.' })
