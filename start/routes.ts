@@ -31,7 +31,7 @@ router.group(() => {
   router.post('logout', [AuthController, 'logout']).use(middleware.auth())
 }).prefix('user')
 
-router.post("uploadMany", [StlController, "uploadMany"]).use(middleware.auth());
+router.post("uploadMany", [StlController, "uploadMany"]);
 
 router.post("costs", [CostController]);
 router.post("quotes/generate-pdf", [QuoteController, "generatePdf"]);
