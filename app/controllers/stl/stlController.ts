@@ -18,7 +18,7 @@ export default class StlController {
    * @responseBody 200 - { "message": "Tout les fichiers uploadés avec succès." }
    * @responseBody 400 - { "errors": [ { "message": "No file uploaded" } ] }
    */
-  async uploadMany({ request, response }: HttpContext) {
+  async uploadMany({ auth, request, response }: HttpContext) {
     const files: MultipartFile[] = request.files('stlFiles', {
       extnames: ['stl'],
     })
