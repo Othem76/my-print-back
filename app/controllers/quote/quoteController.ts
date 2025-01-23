@@ -2,7 +2,7 @@ import { HttpContext } from "@adonisjs/core/http";
 import QuotePdfPayload from "#interfaces/quote/quotePdfPayload.js";
 
 export default class QuoteController {
-  async generatePdf({ request, response }): Promise<HttpContext> {
+  async generatePdf({ request, response }: HttpContext) {
     const payload: QuotePdfPayload = request.only([
       "title",
       "description",

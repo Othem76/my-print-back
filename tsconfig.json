@@ -3,13 +3,14 @@
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "./",
-    "outDir": "./build",
+    "outDir": "./public",
     "paths": {
       "#controllers/*": ["app/controllers/*"],
       "#models/*": ["app/models/*"],
       "#repositories/*": ["app/repositories/*"],
       "#services/*": ["app/services/*"],
       "#interfaces/*": ["app/interfaces/*"],
-    }
+    },
+    "resolveJsonModule": true
   }
 }

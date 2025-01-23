@@ -13,7 +13,7 @@ import UpdateUserPayload from "#interfaces/user/updateUserPayload.js";
 export default class UserController {
   constructor(private userService: UserService) {}
 
-  async create({ request, response }): Promise<HttpContext> {
+  async create({ request, response }: HttpContext) {
     const payload: CreateUserPayload = request.only([
       "fullName",
       "email",
@@ -38,7 +38,7 @@ export default class UserController {
     return response.created(user);
   }
 
-  async delete({ params, response }): Promise<HttpContext> {
+  async delete({ params, response }: HttpContext) {
     const userId = params.id;
 
     if (!userId) {
@@ -54,7 +54,7 @@ export default class UserController {
     }
   }
 
-  async getAll({ response }): Promise<HttpContext> {
+  async getAll({ response }: HttpContext) {
     try {
       const users = await this.userService.getAllUsers();
       const usersJson = users.map((user) => user);
@@ -65,7 +65,7 @@ export default class UserController {
     }
   }
 
-  async getUserByEmail({ request, response }): Promise<HttpContext> {
+  async getUserByEmail({ request, response }: HttpContext) {
     const userEmail = request.qs().email;
 
     if (!userEmail) {
@@ -83,7 +83,7 @@ export default class UserController {
     }
   }
 
-  async getUserById({ params, response }): Promise<HttpContext> {
+  async getUserById({ params, response }: HttpContext) {
     const userId = params.id;
 
     if (!userId) {
@@ -98,7 +98,7 @@ export default class UserController {
     }
   }
 
-  async update({ request, response }): Promise<HttpContext> {
+  async update({ request, response }: HttpContext) {
     const { id, fullName, email } = request.only(["id", "fullName", "email"]);
 
     if (!id || isNaN(Number(id))) {
