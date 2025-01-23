@@ -1,5 +1,5 @@
 import scheduler from 'adonisjs-scheduler/services/main'
-import { FILE_UPLOAD_DIRECTORY } from 'app/utils/consts.js';
+import { FILE_UPLOAD_DIRECTORY } from '../app/utils/consts.js'
 import fs from 'fs'
 import path from 'path'
 
