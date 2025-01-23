@@ -72,7 +72,12 @@ export default class StlController {
     // File history creation
     await this.fileHistoryService.createHistory(fileHistoryPayload)
 
-    return response.ok({ message: 'Fichier uploadé avec succès.' })
+    return response.ok({ 
+      message: 'Fichier uploadé avec succès.',
+      data: {
+        file: fileHistoryPayload
+      }
+     })
   }
 
   /**
@@ -122,6 +127,7 @@ export default class StlController {
     }
 
     const user: User = auth.getUserOrFail()
+    const fileHistories: CreateFileHistoryPayload[] = [];
 
     // Files storage
     for (let file of files) {
@@ -132,6 +138,7 @@ export default class StlController {
         fileServerName: fileServerName,
         userId: user.id
       }
+      fileHistories.push(fileHistoryPayload)
 
       await file.move(app.makePath(FILE_UPLOAD_DIRECTORY), {
         name: fileServerName
@@ -140,7 +147,12 @@ export default class StlController {
       await this.fileHistoryService.createHistory(fileHistoryPayload)
     }
 
-    return response.ok({ message: 'Tout les fichiers uploadés avec succès.' })
+    return response.ok({ 
+      message: 'Tout les fichiers uploadés avec succès.',
+      data: {
+        files: fileHistories
+      }
+    });
   }
 
   async clearFiles({ request, response }: HttpContext) {
