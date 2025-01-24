@@ -1,4 +1,5 @@
 export default interface QuotePdfPayload {
+  fileServerName: string
   title: string
   description: string
   date: string

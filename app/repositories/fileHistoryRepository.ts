@@ -12,6 +12,10 @@ export default class FileHistoryRepository implements FileHistoryRepositoryInter
     return await FileHistory.findOrFail(historyId);
   }
 
+  async getByFileServerName(fileServerName: string): Promise<FileHistory | null> {
+    return FileHistory.findBy("file_server_name", fileServerName);
+  }
+
   async getByUserId(userId: number): Promise<FileHistory[]> {
     return FileHistory.findManyBy("user_id", userId);
   }

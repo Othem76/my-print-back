@@ -75,6 +75,8 @@ export default class StlController {
         name: fileServerName
       })
 
+      fileHistories.push(fileHistoryPayload)
+
       await this.fileHistoryService.createHistory(fileHistoryPayload)
     }
 
