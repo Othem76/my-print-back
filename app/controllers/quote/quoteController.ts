@@ -1,7 +1,7 @@
 import { HttpContext } from "@adonisjs/core/http";
 import QuotePdfPayload from "#interfaces/quote/quotePdfPayload.js";
 import { FILE_UPLOAD_DIRECTORY } from "../../utils/consts.js";
-import fs from 'fs'
+import fs from "fs";
 import FileHistoryService from "#services/fileHistoryService";
 import QuoteService from "#services/quoteService";
 import { inject } from "@adonisjs/core";
@@ -9,6 +9,7 @@ import { HistoryStatus } from "#interfaces/fileHistory/historyStatus";
 import { Readable } from "stream";
 import MaterialService from "#services/materialService";
 import PrinterService from "#services/printerService";
+import MailingService from "#services/mailingService";
 
 @inject()
 export default class QuoteController {
@@ -17,11 +18,13 @@ export default class QuoteController {
     private fileHistoryService: FileHistoryService,
     private quoteService: QuoteService,
     private materialService: MaterialService,
-    private printerService: PrinterService
+    private printerService: PrinterService,
+    private mailingService: MailingService
   ) {}
 
   async generatePdf({ request, response }: HttpContext) {
     const costs = request.body().costs as {[key: string]: QuotePdfPayload};
+    const emailPayload = request.body().emails as {recipientEmail: string, sendingEmail: boolean};
 
     const quoteDatas = await Promise.all(Object.keys(costs).map(async (key) => {
       const fileHistory = await this.fileHistoryService.getByFileServerName(key)
@@ -35,10 +38,7 @@ export default class QuoteController {
     try {
       const pdfBuffer = await this.quoteService.generatePdf(quoteDatas)
 
-      const filename = new Date().toISOString().slice(0, 10).replace(/-/g, '')
-
-      response.header('Content-Type', 'application/pdf')
-      response.header('Content-Disposition', `attachment; filename="devis-${filename}.pdf"`)
+      const filename = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 
       // Suppression des fichiers stl temporaires
       const filesServerName = Object.keys(costs);
@@ -67,6 +67,19 @@ export default class QuoteController {
           await this.fileHistoryService.updateHistory(updateFileHistoryPayload)
         }
       });
+
+      const filePDFPath = `${FILE_UPLOAD_DIRECTORY}/devis-${filename}.pdf`;
+      fs.writeFileSync(filePDFPath, pdfBuffer);
+
+      if (emailPayload.sendingEmail) {
+        console.log("Sending email to", emailPayload.recipientEmail);
+        await this.mailingService.sendMail(
+          emailPayload.recipientEmail,
+          "Devis Impression 3D",
+          "Veuillez trouver ci-joint votre devis",
+          filePDFPath
+        );
+      }
 
       return response.stream(Readable.from(pdfBuffer));
     } catch (error) {
