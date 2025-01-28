@@ -5,7 +5,7 @@ export default class MailingService {
   async sendMail(to: string, subject: string, html: string, file: string) {
     await mail.send((message: Message) => {
       message
-        .from("MS_iEqkXh@trial-ynrw7gy7qmrg2k8e.mlsender.net")
+        .from("myprint.contact.hei@gmail.com")
         .to(to)
         .subject(subject)
         .html(html)

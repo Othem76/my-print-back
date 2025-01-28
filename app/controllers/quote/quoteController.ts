@@ -71,14 +71,28 @@ export default class QuoteController {
       const filePDFPath = `${FILE_UPLOAD_DIRECTORY}/devis-${filename}.pdf`;
       fs.writeFileSync(filePDFPath, pdfBuffer);
 
+      // Send the PDF via email
       if (emailPayload.sendingEmail) {
-        console.log("Sending email to", emailPayload.recipientEmail);
+        // Storing the PDF in uploads/quote folder
+        const filePDFPath = `${FILE_UPLOAD_DIRECTORY}/devis-${filename}.pdf`;
+        fs.writeFileSync(filePDFPath, pdfBuffer);
         await this.mailingService.sendMail(
           emailPayload.recipientEmail,
           "Devis Impression 3D",
-          "Veuillez trouver ci-joint votre devis",
+          "Bonjour,<br><br>Veuillez trouver ci-joint votre devis.<br><br>Cordialement,<br>MyPrint",
           filePDFPath
         );
+
+        // Deleting the PDF after sending it
+        fs.unlink(filePDFPath, (err) => {
+          if (err) {
+            console.error(
+              `Error deleting file devis-${filename}.pdf: ${err.message}`
+            );
+          } else {
+            console.log(`Deleted file: devis-${filename}.pdf`);
+          }
+        });
       }
 
       return response.stream(Readable.from(pdfBuffer));
