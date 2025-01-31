@@ -16,7 +16,7 @@ jobs:
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          registry: ghcr.io/othem76
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull and push PostgreSQL image
