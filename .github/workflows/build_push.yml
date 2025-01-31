@@ -48,30 +48,3 @@ jobs:
           push: true
           tags: ghcr.io/othem76/my-print-api:latest
           labels: my-print-api
-
-  deploy:
-    name: Deploy & Run Migrations
-    needs: build-and-push-api
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy using SSH and docker-compose
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST << 'EOF'
-          docker login ghcr.io -u othem76 --password ${{ secrets.GITHUB_TOKEN }}
-
-          # Stop and remove existing containers
-          docker-compose down
-
-          # Pull latest images
-          docker-compose pull
-
-          # Start containers
-          docker-compose up -d
-          EOF
