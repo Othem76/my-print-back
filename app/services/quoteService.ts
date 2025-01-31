@@ -17,7 +17,7 @@ interface QuoteData {
 export default class QuoteService {
   constructor() {}
 
-  static async generatePdf(data: QuoteData): Promise<Buffer> {
+  async generatePdf(data: QuoteData): Promise<Buffer> {
     const browser = await puppeteer.launch()
     const page = await browser.newPage()
 

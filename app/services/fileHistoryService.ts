@@ -17,6 +17,10 @@ export default class FileHistoryService {
     return await this.repository.getById(historyId);
   }
 
+  async getByFileServerName(fileServerName: string): Promise<FileHistory | null> {
+    return await this.repository.getByFileServerName(fileServerName);
+  }
+
   async getByUserId(userId: number): Promise<FileHistory[]> {
     return await this.repository.getByUserId(userId);
   }

@@ -59,6 +59,7 @@ export default class StlController {
     }
 
     const user: User = auth.getUserOrFail()
+    const fileHistories: CreateFileHistoryPayload[] = [];
 
     // Files storage
     for (let file of files) {
@@ -74,10 +75,17 @@ export default class StlController {
         name: fileServerName
       })
 
+      fileHistories.push(fileHistoryPayload)
+
       await this.fileHistoryService.createHistory(fileHistoryPayload)
     }
 
-    return response.ok({ message: 'Tout les fichiers uploadés avec succès.' })
+    return response.ok({ 
+      message: 'Tout les fichiers uploadés avec succès.',
+      data: {
+        files: fileHistories
+      }
+    });
   }
 
   async clearFiles({ response }: HttpContext) {

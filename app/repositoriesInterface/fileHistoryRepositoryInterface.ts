@@ -7,6 +7,8 @@ export default interface FileHistoryRepositoryInterface {
 
   getById(historyId: number): Promise<FileHistory>;
 
+  getByFileServerName(fileServerName: string): Promise<FileHistory | null>;
+
   getByUserId(userId: number): Promise<FileHistory[]>
 
   createHistory(historyPayload: CreateFileHistoryPayload): Promise<FileHistory>
