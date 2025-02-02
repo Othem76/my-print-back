@@ -16,7 +16,7 @@ const dbConfig = defineConfig({
         database: env.get("DB_DATABASE"),
         ...(env.get('NODE_ENV') === 'production' && {
           ssl: {
-            ca: fs.readFileSync(path.join(__dirname, '../ca.pem')),
+            ca: fs.readFileSync('../ca.pem'),
           },
         }),
       },
