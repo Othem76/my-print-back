@@ -3,5 +3,5 @@ export type Cost = {
   cleaningCost: number;
   electricityCost: number;
   totalCost: number;
-  printTime: string;
+  printTime: number;
 };

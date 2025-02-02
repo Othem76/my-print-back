@@ -4,11 +4,11 @@ import Material from "#models/material/material";
 
 export default interface MaterialRepositoryInterface {
   getAllMaterials(): Promise<Material[]>;
-  getMaterialById(materialId: number): Promise<Material>;
+  getMaterialById(materialId: string): Promise<Material>;
   createMaterial(material: CreateMaterialPayload): Promise<Material>;
   updateMaterial(
-    materialId: number,
+    materialId: string,
     material: UpdateMaterialPayload
   ): Promise<Material>;
-  deleteMaterial(materialId: number): Promise<void>;
+  deleteMaterial(materialId: string): Promise<void>;
 }

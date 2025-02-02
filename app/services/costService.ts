@@ -2,7 +2,6 @@ import CuraService from "#services/curaService";
 import * as fs from "node:fs";
 import app from "@adonisjs/core/services/app";
 import { FILE_UPLOAD_DIRECTORY } from "../utils/consts.js";
-import { PrintSetting } from "#interfaces/cost/printSettings";
 import { Cost } from "#models/cost/cost";
 import { CostSetting } from "#interfaces/cost/costSetting";
 
@@ -45,16 +44,10 @@ export default class CostService {
   };
 
   getMaterialCost(materialPrice: number, weight: number) {
-    return (materialPrice * weight) / 1000;
+    return (materialPrice * weight) / 1250;
   }
 
-  getCleaningCost(time: number) {
-    const cleaningCost = 0.4998;
-    return (time / 3600) * cleaningCost;
-  }
-
-  getElectricityCost(time: number) {
-    const electricityCost = 0.4939;
+  getElectricityCost(time: number, electricityCost: number) {
     return (time / 3600) * electricityCost;
   }
 
@@ -78,7 +71,7 @@ export default class CostService {
       app.makePath(`${FILE_UPLOAD_DIRECTORY}/${filename}`)
     );
     const results = await curaService.slice(
-      settings.printer,
+      settings.printer.curaPrinterName,
       fileBuffer,
       settings.support,
       settings.layerHeight,
@@ -90,10 +83,8 @@ export default class CostService {
       results.filamentUsage
     );
 
-    const cleaningCost = this.getCleaningCost(3600); //TODO
-    const electricityCost = this.getElectricityCost(
-      results.printTime
-    );
+    const cleaningCost = settings.printer.cleaningCost;
+    const electricityCost = this.getElectricityCost(results.printTime, settings.printer.impressingCost);
 
     const totalCost = this.getTotalCost(
       materialCost,
@@ -101,9 +92,7 @@ export default class CostService {
       electricityCost
     );
 
-    const hours = Math.floor(results.printTime / 3600);
-    const minutes = Math.floor((results.printTime % 3600) / 60);
-    const printTime = `${hours.toString().padStart(2, "0")}h${minutes.toString().padStart(2, "0")}`;
+    const printTime = results.printTime
 
     return {
       printTime,
