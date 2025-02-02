@@ -1,7 +1,6 @@
 import MaterialRepository from "#repositories/materialRepository";
 import Material from "#models/material/material";
 import { inject } from "@adonisjs/core";
-import { InvalidArgumentsException } from "@adonisjs/core/exceptions";
 
 @inject()
 export default class MaterialService {

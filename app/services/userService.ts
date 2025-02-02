@@ -12,7 +12,7 @@ export default class UserService {
     return await this.repository.getAllUsers();
   }
 
-  async getUserById(userId: number): Promise<User> {
+  async getUserById(userId: string): Promise<User> {
     return await this.repository.getUserById(userId);
   }
 
@@ -25,11 +25,11 @@ export default class UserService {
     return user;
   }
 
-  async updateUser(userId: number, payload: UpdateUserPayload): Promise<User> {
+  async updateUser(userId: string, payload: UpdateUserPayload): Promise<User> {
     return await this.repository.updateUser(userId, payload);
   }
 
-  async deleteUser(userId: number): Promise<void> {
+  async deleteUser(userId: string): Promise<void> {
     return await this.repository.deleteUser(userId);
   }
 }

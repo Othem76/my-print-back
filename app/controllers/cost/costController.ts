@@ -43,7 +43,6 @@ export default class CostController {
     }
 
     const printer = await this.printerService.getPrinterById(payload.printerId);
-    console.log(printer);
 
     const costs = await this.costService.getCosts({
       fileId: payload.fileId,

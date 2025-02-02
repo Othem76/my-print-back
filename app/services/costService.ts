@@ -77,12 +77,6 @@ export default class CostService {
     const fileBuffer = fs.readFileSync(
       app.makePath(`${FILE_UPLOAD_DIRECTORY}/${filename}`)
     );
-    console.log('BEFORE SLICE');
-    console.log("Printer : ", settings.printer);
-    console.log("Support : ", settings.support);
-    console.log("Layer Height : ", settings.layerHeight);
-    console.log("Infill : ", settings.infill);
-    console.log("Filename : ", filename);
     const results = await curaService.slice(
       settings.printer,
       fileBuffer,
@@ -90,7 +84,6 @@ export default class CostService {
       settings.layerHeight,
       settings.infill
     );
-    console.log('AFTER SLICE');
 
     const materialCost = this.getMaterialCost(
       settings.material.grammePrize,

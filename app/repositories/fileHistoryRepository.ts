@@ -8,7 +8,7 @@ export default class FileHistoryRepository implements FileHistoryRepositoryInter
     return await FileHistory.all();
   }
 
-  async getById(historyId: number): Promise<FileHistory> {
+  async getById(historyId: string): Promise<FileHistory> {
     return await FileHistory.findOrFail(historyId);
   }
 
@@ -16,7 +16,7 @@ export default class FileHistoryRepository implements FileHistoryRepositoryInter
     return FileHistory.findBy("file_server_name", fileServerName);
   }
 
-  async getByUserId(userId: number): Promise<FileHistory[]> {
+  async getByUserId(userId: string): Promise<FileHistory[]> {
     return FileHistory.findManyBy("user_id", userId);
   }
 
@@ -26,5 +26,9 @@ export default class FileHistoryRepository implements FileHistoryRepositoryInter
 
   async updateHistory(historyPayload: UpdateFileHistoryPayload): Promise<FileHistory> {
     return FileHistory.updateOrCreate({ id: historyPayload.id }, { status: historyPayload.status });
+  }
+
+  async deleteHistoryByUserId(userId: string): Promise<void> {
+    await FileHistory.query().where("user_id", userId).delete();
   }
 }

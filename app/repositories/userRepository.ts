@@ -7,7 +7,7 @@ export default class UserRepository implements UserRepositoryInterface {
   async getAllUsers(): Promise<User[]> {
     return await User.all();
   }
-  async getUserById(userId: number): Promise<User> {
+  async getUserById(userId: string): Promise<User> {
     return await User.findOrFail(userId);
   }
   async getUserByEmail(email: string): Promise<User | null> {
@@ -17,11 +17,11 @@ export default class UserRepository implements UserRepositoryInterface {
     const user = await User.create(payload);
     return user;
   }
-  async updateUser(userId: number, payload: UpdateUserPayload): Promise<User> {
+  async updateUser(userId: string, payload: UpdateUserPayload): Promise<User> {
     const userModified = await User.updateOrCreate({ id: userId }, payload);
     return userModified;
   }
-  async deleteUser(userId: number): Promise<void> {
+  async deleteUser(userId: string): Promise<void> {
     await User.query().where("id", userId).delete();
   }
 }

@@ -1,4 +1,4 @@
 export default interface UpdateFileHistoryPayload {
-  id: number;
+  id: string;
   status: string;
-} 
+}

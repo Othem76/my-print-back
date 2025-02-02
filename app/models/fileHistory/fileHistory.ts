@@ -19,7 +19,7 @@ export default class FileHistory extends BaseModel {
   public fileServerName!: string
 
   @column()
-  public userId!: number
+  public userId!: string
 
   @column()
   public status!: string

@@ -13,7 +13,7 @@ export default class FileHistoryService {
     return await this.repository.getAllHistory();
   }
 
-  async getById(historyId: number): Promise<FileHistory> {
+  async getById(historyId: string): Promise<FileHistory> {
     return await this.repository.getById(historyId);
   }
 
@@ -21,7 +21,7 @@ export default class FileHistoryService {
     return await this.repository.getByFileServerName(fileServerName);
   }
 
-  async getByUserId(userId: number): Promise<FileHistory[]> {
+  async getByUserId(userId: string): Promise<FileHistory[]> {
     return await this.repository.getByUserId(userId);
   }
 
@@ -32,5 +32,9 @@ export default class FileHistoryService {
 
   async updateHistory(historyPayload: UpdateFileHistoryPayload): Promise<FileHistory> {
     return await this.repository.updateHistory(historyPayload);
+  }
+
+  async deleteHistoryByUserId(userId: string): Promise<void> {
+    await this.repository.deleteHistoryByUserId(userId);
   }
 }

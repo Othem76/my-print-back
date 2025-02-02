@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.uuid('id').primary()
       table.string('file_original_name').notNullable()
       table.string('file_server_name').notNullable().unique()
-      table.integer('user_id').notNullable()
+      table.uuid('user_id').notNullable()
       table.string('status').notNullable()
 
       table.timestamp('uploaded_at')
