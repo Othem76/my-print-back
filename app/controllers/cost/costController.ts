@@ -14,7 +14,7 @@ export default class CostController {
    * @content application/json
    */
   async handle({ request, response }: HttpContext) {
-    const payload: PrintSetting = request.body() as PrintSetting;
+    const payload: PrintSetting = request.body()[0] as PrintSetting;
 
     // TODO : list material
     if (!payload.materialId) {
