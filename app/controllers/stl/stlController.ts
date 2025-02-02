@@ -35,7 +35,7 @@ export default class StlController {
 
     for (let file of files) {
       // Type verification
-      if (file.extname && file.extname !== 'stl') {
+      if (file.extname && file.extname.toLocaleLowerCase() !== 'stl') {
         return response.status(400).send({
           errors: [
             {
