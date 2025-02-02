@@ -1,7 +1,8 @@
 import env from "#start/env";
 import { defineConfig } from "@adonisjs/lucid";
 import fs from "fs";
-import path from "path";
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const dbConfig = defineConfig({
   connection: "postgres",
@@ -16,7 +17,7 @@ const dbConfig = defineConfig({
         database: env.get("DB_DATABASE"),
         ...(env.get('NODE_ENV') === 'production' && {
           ssl: {
-            ca: fs.readFileSync('../ca.pem'),
+            ca: fs.readFileSync(path.dirname(fileURLToPath(import.meta.url)) + '../../ca.pem')
           },
         }),
       },
