@@ -1,6 +1,6 @@
 export default interface CreatePrinterPayload {
   name: string;
-  plateSize: string;
+  curaPrinterName: string;
   cleaningCost: number;
   impressingCost: number;
 }

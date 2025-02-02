@@ -7,19 +7,19 @@ export default class printerRepository implements PrinterRepositoryInterface {
   async getAllPrinters(): Promise<Printer[]> {
     return await Printer.query().preload('materials');
   }
-  async getPrinterById(printerId: number): Promise<Printer> {
-    return await Printer.findOrFail(printerId);
+  async getPrinterById(printerId: string): Promise<Printer> {
+    return await Printer.query().where({ id: printerId }).preload('materials').firstOrFail();
   }
   createPrinter(printer: CreatePrinterPayload): Promise<Printer> {
     throw new Error("Method not implemented.");
   }
   updatePrinter(
-    printerId: number,
+    printerId: string,
     payload: UpdatePrinterPayload
   ): Promise<Printer> {
     throw new Error("Method not implemented.");
   }
-  async deletePrinter(printerId: number): Promise<void> {
+  async deletePrinter(printerId: string): Promise<void> {
     await Printer.query().where({ id: printerId }).delete();
   }
 }

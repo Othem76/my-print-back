@@ -5,14 +5,14 @@ import UpdatePrinterPayload from "#models/printer/dto/updatePrinterPayload.js";
 export default interface PrinterRepositoryInterface {
   getAllPrinters(): Promise<Printer[]>;
 
-  getPrinterById(printerId: number): Promise<Printer>;
+  getPrinterById(printerId: string): Promise<Printer>;
 
   createPrinter(printer: CreatePrinterPayload): Promise<Printer>;
 
   updatePrinter(
-    printerId: number,
+    printerId: string,
     payload: UpdatePrinterPayload
   ): Promise<Printer>;
 
-  deletePrinter(printerId: number): Promise<void>;
+  deletePrinter(printerId: string): Promise<void>;
 }

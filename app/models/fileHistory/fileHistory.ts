@@ -1,9 +1,16 @@
-import { BaseModel, column } from "@adonisjs/lucid/orm";
+import { BaseModel, beforeCreate, column } from "@adonisjs/lucid/orm";
 import { DateTime } from "luxon";
+import { v4 as uuidv4 } from "uuid";
 
 export default class FileHistory extends BaseModel {
+
+  @beforeCreate()
+  public static async addUidHook(fileHistory: FileHistory) {
+    fileHistory.id = uuidv4();
+  }
+
   @column({ isPrimary: true })
-  public id!: number
+  public id!: string
 
   @column()
   public fileOriginalName!: string

@@ -12,7 +12,7 @@ export default class MaterialPrinterSeeder extends BaseSeeder {
       printers = await Printer.createMany([
             {
               name: "ULTIMAKER S3",
-              curaPrinterName: "utlimaker_s3",
+              curaPrinterName: "ultimaker_s3",
               width: 230,
               length: 190,
               height: 200,

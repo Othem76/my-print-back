@@ -4,6 +4,7 @@ import app from "@adonisjs/core/services/app";
 import { FILE_UPLOAD_DIRECTORY } from "../utils/consts.js";
 import { PrintSetting } from "#interfaces/cost/printSettings";
 import { Cost } from "#models/cost/cost";
+import { CostSetting } from "#interfaces/cost/costSetting";
 
 export default class CostService {
   // TODO: a mettre en base de données
@@ -43,8 +44,8 @@ export default class CostService {
     "Generic PLA": 0.027,
   };
 
-  getMaterialCost(material: keyof typeof this.materialPrices, weight: number) {
-    return (this.materialPrices[material] * weight) / 1000;
+  getMaterialCost(materialPrice: number, weight: number) {
+    return (materialPrice * weight) / 1000;
   }
 
   getCleaningCost(time: number) {
@@ -69,13 +70,19 @@ export default class CostService {
 
   async getCostsForFile(
     filename: string,
-    settings: PrintSetting
+    settings: CostSetting
   ): Promise<Cost> {
     const curaService = new CuraService();
 
     const fileBuffer = fs.readFileSync(
       app.makePath(`${FILE_UPLOAD_DIRECTORY}/${filename}`)
     );
+    console.log('BEFORE SLICE');
+    console.log("Printer : ", settings.printer);
+    console.log("Support : ", settings.support);
+    console.log("Layer Height : ", settings.layerHeight);
+    console.log("Infill : ", settings.infill);
+    console.log("Filename : ", filename);
     const results = await curaService.slice(
       settings.printer,
       fileBuffer,
@@ -83,9 +90,10 @@ export default class CostService {
       settings.layerHeight,
       settings.infill
     );
+    console.log('AFTER SLICE');
 
     const materialCost = this.getMaterialCost(
-      settings.material,
+      settings.material.grammePrize,
       results.filamentUsage
     );
 
@@ -117,7 +125,7 @@ export default class CostService {
     return fs.readdirSync(app.makePath(FILE_UPLOAD_DIRECTORY));
   }
 
-  async getCosts(settings: PrintSetting): Promise<Map<string, Cost>> {
+  async getCosts(settings: CostSetting): Promise<Map<string, Cost>> {
     const files = this.findAllUserFile();
 
     const results = await Promise.all(

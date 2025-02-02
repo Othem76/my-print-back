@@ -1,7 +1,7 @@
 export interface PrintSetting {
   fileId: string;
-  printer: string;
-  material: string;
+  printerId: string;
+  materialId: string;
   support: boolean;
   layerHeight: number;
   infill: number;

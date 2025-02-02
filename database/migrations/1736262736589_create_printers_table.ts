@@ -9,7 +9,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid("id").primary();
       table.string("name").notNullable();
-      table.string("cura_printer_name").nullable();
+      table.string("cura_printer_name").notNullable();
       table.float("width").notNullable();
       table.float("length").notNullable();
       table.float("height").notNullable();

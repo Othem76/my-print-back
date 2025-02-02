@@ -10,11 +10,11 @@ export default class PrinterService {
     return await this.repository.getAllPrinters();
   }
 
-  async getPrinterById(printerId: number): Promise<Printer> {
+  async getPrinterById(printerId: string): Promise<Printer> {
     return await this.repository.getPrinterById(printerId);
   }
 
-  async deletePrinter(printerId: number): Promise<void> {
+  async deletePrinter(printerId: string): Promise<void> {
     return await this.repository.deletePrinter(printerId);
   }
 }

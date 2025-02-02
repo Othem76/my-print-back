@@ -1,11 +1,12 @@
 import { PrintSetting } from "#interfaces/cost/printSettings.js";
 import CostService from "#services/costService";
+import PrinterService from "#services/printerService";
 import { inject } from "@adonisjs/core";
 import { HttpContext } from "@adonisjs/core/http";
 
 @inject()
 export default class CostController {
-  constructor(private costService: CostService) {}
+  constructor(private costService: CostService, private printerService: PrinterService) {}
 
   /**
    * @handle
@@ -16,11 +17,11 @@ export default class CostController {
     const payload: PrintSetting = request.body() as PrintSetting;
 
     // TODO : list material
-    if (!payload.material) {
+    if (!payload.materialId) {
       return response.badRequest({ message: "Insert a material" });
     }
 
-    if (!payload.printer) {
+    if (!payload.printerId) {
       //TODO get printer by name
       return response.badRequest({ message: "Invalid printer" });
     }
@@ -35,20 +36,25 @@ export default class CostController {
 
     if (
       !payload.layerHeight ||
-      payload.layerHeight <= 0 ||
-      payload.layerHeight > 100
+      payload.layerHeight < 100 ||
+      payload.layerHeight > 200
     ) {
       return response.badRequest({ message: "Invalid layer height" });
     }
 
+    const printer = await this.printerService.getPrinterById(payload.printerId);
+    console.log(printer);
+
     const costs = await this.costService.getCosts({
       fileId: payload.fileId,
-      printer: payload.printer,
+      printer: printer.curaPrinterName,
       support: payload.support,
-      material: payload.material,
+      material: printer.materials.find((m) => m.id === payload.materialId)!,
       layerHeight: payload.layerHeight / 100,
       infill: payload.infill / 100,
     });
+
+    console.log('COSTS : ', costs);
 
     return response.send(Object.fromEntries(costs));
   }

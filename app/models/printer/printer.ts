@@ -18,7 +18,7 @@ export default class Printer extends BaseModel {
   declare name: string;
 
   @column()
-  declare curaPrinterName: string | null;
+  declare curaPrinterName: string;
 
   @column()
   declare width: number;

@@ -80,12 +80,7 @@ export default class StlController {
       await this.fileHistoryService.createHistory(fileHistoryPayload)
     }
 
-    return response.ok({ 
-      message: 'Tout les fichiers uploadés avec succès.',
-      data: {
-        files: fileHistories
-      }
-    });
+    return response.ok(fileHistories);
   }
 
   async clearFiles({ response }: HttpContext) {
