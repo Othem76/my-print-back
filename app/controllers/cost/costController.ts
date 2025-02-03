@@ -46,14 +46,12 @@ export default class CostController {
 
     const costs = await this.costService.getCosts({
       fileId: payload.fileId,
-      printer: printer.curaPrinterName,
+      printer: printer,
       support: payload.support,
       material: printer.materials.find((m) => m.id === payload.materialId)!,
       layerHeight: payload.layerHeight / 100,
       infill: payload.infill / 100,
     });
-
-    console.log('COSTS : ', costs);
 
     return response.send(Object.fromEntries(costs));
   }

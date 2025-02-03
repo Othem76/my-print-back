@@ -12,11 +12,11 @@ export default class MaterialService {
     return await this.repository.getAllMaterials();
   }
 
-  async getMaterialById(materialId: number): Promise<Material> {
+  async getMaterialById(materialId: string): Promise<Material> {
     return await this.repository.getMaterialById(materialId);
   }
 
-  async deleteMaterial(materialId: number): Promise<void> {
+  async deleteMaterial(materialId: string): Promise<void> {
     return await this.repository.deleteMaterial(materialId);
   }
 }

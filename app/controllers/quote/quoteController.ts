@@ -6,6 +6,7 @@ import FileHistoryService from "#services/fileHistoryService";
 import QuoteService from "#services/quoteService";
 import { inject } from "@adonisjs/core";
 import { HistoryStatus } from "#interfaces/fileHistory/historyStatus";
+import { Readable } from "stream";
 
 @inject()
 export default class QuoteController {
@@ -15,19 +16,14 @@ export default class QuoteController {
   async generatePdf({ request, response }: HttpContext) {
     const payload: QuotePdfPayload = request.only([
       "fileServerName",
-      "title",
-      "description",
-      "date",
       "printer",
       "material",
-      "quantity",
-      "materialCost",
-      "printingTime",
-      "costPerHour",
+      "totalMaterialCost",
+      "printTime",
+      "electricityCost",
       "cleaningCost",
       "totalCost",
     ]);
-
 
     try {
       const pdfBuffer = await this.quoteService.generatePdf(payload)
@@ -60,8 +56,9 @@ export default class QuoteController {
         this.fileHistoryService.updateHistory(updateFileHistoryPayload)
       }
 
-      return response.send(pdfBuffer)
+      return response.stream(Readable.from(pdfBuffer));
     } catch (error) {
+      console.log(error)
       return response.status(500).send({ error: 'Une erreur est survenue lors de la génération du PDF' })
     }
   }

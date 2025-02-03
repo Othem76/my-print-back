@@ -11,7 +11,7 @@ export default class MaterialRepository implements MaterialRepositoryInterface {
     return await Material.all();
   }
 
-  async getMaterialById(materialId: number): Promise<Material> {
+  async getMaterialById(materialId: string): Promise<Material> {
     return await Material.findOrFail(materialId);
   }
 
@@ -20,13 +20,13 @@ export default class MaterialRepository implements MaterialRepositoryInterface {
   }
 
   updateMaterial(
-    materialId: number,
+    materialId: string,
     material: UpdateMaterialPayload
   ): Promise<Material> {
     throw new Error("Method not implemented.");
   }
 
-  async deleteMaterial(materialId: number): Promise<void> {
+  async deleteMaterial(materialId: string): Promise<void> {
     await Material.query().where({ id: materialId }).delete();
   }
 }
