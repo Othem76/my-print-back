@@ -1,7 +1,9 @@
 export type Cost = {
-  materialCost: number;
+  totalMaterialCost: number;
   cleaningCost: number;
   electricityCost: number;
   totalCost: number;
-  printTime: number;
+  printTime: string;
+  materialId: string;
+  printerId: string;
 };

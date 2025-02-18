@@ -67,9 +67,7 @@ export default class CostService {
   ): Promise<Cost> {
     const curaService = new CuraService();
 
-    const fileBuffer = fs.readFileSync(
-      app.makePath(`${FILE_UPLOAD_DIRECTORY}/${filename}`)
-    );
+    const fileBuffer = this.findUserFile(filename);
     const results = await curaService.slice(
       settings.printer.curaPrinterName,
       fileBuffer,
@@ -78,7 +76,7 @@ export default class CostService {
       settings.infill
     );
 
-    const materialCost = this.getMaterialCost(
+    const totalMaterialCost = this.getMaterialCost(
       settings.material.grammePrize,
       results.filamentUsage
     );
@@ -87,36 +85,28 @@ export default class CostService {
     const electricityCost = this.getElectricityCost(results.printTime, settings.printer.impressingCost);
 
     const totalCost = this.getTotalCost(
-      materialCost,
+      totalMaterialCost,
       cleaningCost,
       electricityCost
     );
 
-    const printTime = results.printTime
+    const printTimeInSeconds = results.printTime;
+    const hours = Math.floor(printTimeInSeconds / 3600);
+    const minutes = Math.floor((printTimeInSeconds % 3600) / 60);
+    const printTime = `${hours}h ${minutes}m`;
 
     return {
       printTime,
-      materialCost,
+      totalMaterialCost,
       cleaningCost,
       electricityCost,
       totalCost,
+      materialId: settings.material.id,
+      printerId: settings.printer.id,
     };
   }
 
-  findAllUserFile() {
-    return fs.readdirSync(app.makePath(FILE_UPLOAD_DIRECTORY));
-  }
-
-  async getCosts(settings: CostSetting): Promise<Map<string, Cost>> {
-    const files = this.findAllUserFile();
-
-    const results = await Promise.all(
-      files.map(async (file) => {
-        const costs = await this.getCostsForFile(file, settings);
-        return [file, costs] as [string, Cost];
-      })
-    );
-
-    return new Map(results);
+  findUserFile(filename: string) {
+    return fs.readFileSync(app.makePath(`${FILE_UPLOAD_DIRECTORY}/${filename}`));
   }
 }

@@ -1,31 +1,30 @@
 import puppeteer from 'puppeteer'
-import MaterialService from './materialService.js'
-import { inject } from '@adonisjs/core'
-import PrinterService from './printerService.js'
+import Material from '#models/material/material'
+import Printer from '#models/printer/printer'
 
 interface QuoteData {
-    printer: string
-    material: string
+    printerId: string
+    materialId: string
     totalMaterialCost: number
-    printTime: number
+    printTime: string
     electricityCost: number
     cleaningCost: number
     totalCost: number
+    material: Material
+    printer: Printer
+    filename?: string
 }
 
-@inject()
 export default class QuoteService {
-  constructor(private materialService: MaterialService, private printerService: PrinterService) {}
+  constructor() {}
 
-  async generatePdf(data: QuoteData): Promise<Buffer> {
+  async generatePdf(quoteDatas: QuoteData[]): Promise<Buffer> {
     const date = new Date().toLocaleDateString('fr-FR', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     })
-
-    const material = await this.materialService.getMaterialById(data.material)
-    const printer = await this.printerService.getPrinterById(data.printer)
+    const totalCost = quoteDatas.reduce((sum, data) => sum + data.totalCost, 0)
 
     const browser = await puppeteer.launch()
     const page = await browser.newPage()
@@ -98,9 +97,11 @@ export default class QuoteService {
             <p>Siret : <span>&lt;à compléter&gt;</span> | Tél : <span>&lt;à compléter&gt;</span></p>
           </div>
 
+
+          ${quoteDatas.map(data => `
           <div class="summary">
-            <h3>Détails</h3>
-            <p>Imprimante : ${printer.name}</p>
+            <h3>Pièce : ${data.filename}</h3>
+            <p>Imprimante : ${data.printer.name}</p>
             <table>
               <thead>
                 <tr>
@@ -113,17 +114,17 @@ export default class QuoteService {
               </thead>
               <tbody>
                 <tr>
-                  <td>${material.name}</td> <!-- Matériau -->
-                  <td>${(data.totalMaterialCost / material.grammePrize).toFixed(2)}</td> <!-- Quantité -->
+                  <td>${data.material.name}</td> <!-- Matériau -->
+                  <td>${(data.totalMaterialCost / data.material.grammePrize).toFixed(2)}</td> <!-- Quantité -->
                   <td>g</td>
-                  <td>${(material.grammePrize).toFixed(2)} €</td> <!-- Prix unitaire HT -->
+                  <td>${(data.material.grammePrize).toFixed(2)} €</td> <!-- Prix unitaire HT -->
                   <td>${data.totalMaterialCost.toFixed(2)} €</td> <!-- Prix total HT -->
                 </tr>
                 <tr>
                   <td>Estimation temps d'impression</td>
-                  <td>${(data.printTime / 3600).toFixed(2)}</td> <!-- Quantité -->
+                  <td>${data.printTime}</td> <!-- Quantité -->
                   <td>h</td>
-                  <td>${printer.impressingCost.toFixed(2)} €</td> <!-- Prix unitaire HT -->
+                  <td>${data.printer.impressingCost.toFixed(2)} €</td> <!-- Prix unitaire HT -->
                   <td>${data.electricityCost.toFixed(2)} €</td> <!-- Prix total HT -->
                 </tr>
                 <tr>
@@ -136,6 +137,7 @@ export default class QuoteService {
               </tbody>
             </table>
           </div>
+          `).join('')}
 
           <div class="summary">
             <h3>Résumé</h3>
@@ -143,15 +145,15 @@ export default class QuoteService {
               <tbody>
                 <tr>
                   <th>Total HT</th>
-                  <td>${(data.totalCost * 0.80).toFixed(2)} €</td>
+                  <td>${(totalCost * 0.80).toFixed(2)} €</td>
                 </tr>
                 <tr>
                   <th>TVA (20%)</th>
-                  <td>${(data.totalCost * 0.20).toFixed(2)} €</td>
+                  <td>${(totalCost * 0.20).toFixed(2)} €</td>
                 </tr>
                 <tr>
                   <th>Total TTC</th>
-                  <td>${data.totalCost.toFixed(2)} €</td>
+                  <td>${totalCost.toFixed(2)} €</td>
                 </tr>
               </tbody>
             </table>
