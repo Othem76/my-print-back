@@ -1,7 +1,7 @@
-import { BaseSchema } from '@adonisjs/lucid/schema'
+import { BaseSchema } from "@adonisjs/lucid/schema";
 
 export default class extends BaseSchema {
-  protected tableName = 'file_histories'
+  protected tableName = "file_histories";
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
@@ -11,12 +11,12 @@ export default class extends BaseSchema {
       table.uuid('user_id').notNullable()
       table.string('status').notNullable()
 
-      table.timestamp('uploaded_at')
-      table.timestamp('updated_at')
-    })
+      table.timestamp("uploaded_at");
+      table.timestamp("updated_at");
+    });
   }
 
   async down() {
-    this.schema.dropTable(this.tableName)
+    this.schema.dropTable(this.tableName);
   }
 }
