@@ -78,7 +78,7 @@ export default class QuoteController {
         fs.writeFileSync(filePDFPath, pdfBuffer);
         await this.mailingService.sendMail(
           emailPayload.recipientEmail,
-          "Devis Impression 3D",
+          "Devis Impression 3D Fablab HEI",
           "Bonjour,<br><br>Veuillez trouver ci-joint votre devis.<br><br>Cordialement,<br>MyPrint",
           filePDFPath
         );
