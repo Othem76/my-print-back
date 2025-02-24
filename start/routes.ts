@@ -34,7 +34,8 @@ router.group(() => {
 router.post("uploadMany", [StlController, "uploadMany"]).use(middleware.auth());
 
 router.post("costs", [CostController]);
-router.post("quotes/generate-pdf", [QuoteController, "generatePdf"]);
+router.post("quotes/generate-quote", [QuoteController, "generateQuote"]);
+router.post("quotes/send-quote", [QuoteController, "generateQuoteAndSendMail"]);
 
 router.get("printers", [PrinterController, "getAllPrinters"]);
 router.get("printers/:id", [PrinterController, "getPrinterById"]);
