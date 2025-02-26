@@ -35,6 +35,8 @@ export default class Printer extends BaseModel {
   @column()
   declare impressingCost: number;
 
-  @manyToMany(() => Material)
+  @manyToMany(() => Material, {
+    pivotTable: 'material_printer',
+  })
   declare materials: ManyToMany<typeof Material>;
 }

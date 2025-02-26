@@ -1,6 +1,7 @@
 import MaterialRepository from "#repositories/materialRepository";
 import Material from "#models/material/material";
 import { inject } from "@adonisjs/core";
+import MaterialDto from "#models/material/dto/materialDto";
 
 @inject()
 export default class MaterialService {
@@ -14,6 +15,14 @@ export default class MaterialService {
 
   async getMaterialById(materialId: string): Promise<Material> {
     return await this.repository.getMaterialById(materialId);
+  }
+
+  async createMaterial(material: MaterialDto): Promise<Material> {
+    return await this.repository.createMaterial(material);
+  }
+
+  async updateMaterial(materialId: string, material: MaterialDto): Promise<Material> {
+    return await this.repository.updateMaterial(materialId, material);
   }
 
   async deleteMaterial(materialId: string): Promise<void> {

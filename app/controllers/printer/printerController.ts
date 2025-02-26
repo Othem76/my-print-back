@@ -29,7 +29,7 @@ export default class PrinterController {
    * @responseBody 404 - { "errors": [ { "message": "Printer not found" } ] }
    */
   async getPrinterById({ params, response }: HttpContext) {
-    const printerId: number = params.id;
+    const printerId: string = params.id;
     if (!printerId) {
       return response.status(400).send({ error: "Printer ID is required" });
     }

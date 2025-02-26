@@ -3,7 +3,7 @@ import { Cost } from "#models/cost/cost";
 import CostService from "#services/costService";
 import PrinterService from "#services/printerService";
 import { inject } from "@adonisjs/core";
-import { HttpContext, Response } from "@adonisjs/core/http";
+import { HttpContext } from "@adonisjs/core/http";
 
 @inject()
 export default class CostController {

@@ -1,12 +1,8 @@
-import CreateMaterialPayload from "#models/material/dto/createMaterialPayload";
-import UpdateMaterialPayload from "#models/material/dto/updateMaterialPayload";
+import MaterialDto from "#models/material/dto/materialDto";
 import Material from "#models/material/material";
 import MaterialRepositoryInterface from "#repositoriesInterface/materialRepositoryInterface";
 
 export default class MaterialRepository implements MaterialRepositoryInterface {
-  getMaterialByImpressingTypeId(impressingTypeId: number): Promise<Material[]> {
-    throw new Error("Method not implemented.");
-  }
   async getAllMaterials(): Promise<Material[]> {
     return await Material.all();
   }
@@ -15,15 +11,29 @@ export default class MaterialRepository implements MaterialRepositoryInterface {
     return await Material.findOrFail(materialId);
   }
 
-  createMaterial(material: CreateMaterialPayload): Promise<Material> {
-    throw new Error("Method not implemented.");
+  async createMaterial(materialData: MaterialDto): Promise<Material> {
+    const material: MaterialDto = { ...materialData };
+    const result = await Material.create(material);
+
+    if (materialData.printers) {
+      await result.related('printers').sync(materialData.printers);
+    }
+
+    return result;
   }
 
-  updateMaterial(
+  async updateMaterial(
     materialId: string,
-    material: UpdateMaterialPayload
+    materialData: MaterialDto
   ): Promise<Material> {
-    throw new Error("Method not implemented.");
+    //const material: MaterialDto = { ...materialData };
+    const result = await Material.updateOrCreate({ id: materialId }, materialData);
+
+    if (materialData.printers) {
+      await result.related('printers').sync(materialData.printers);
+    }
+
+    return result;
   }
 
   async deleteMaterial(materialId: string): Promise<void> {

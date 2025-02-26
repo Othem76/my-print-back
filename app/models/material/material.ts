@@ -1,4 +1,6 @@
-import { BaseModel, beforeCreate, column } from "@adonisjs/lucid/orm";
+import Printer from "#models/printer/printer";
+import { BaseModel, beforeCreate, column, manyToMany } from "@adonisjs/lucid/orm";
+import type { ManyToMany } from "@adonisjs/lucid/types/relations";
 import { v4 as uuidv4 } from "uuid";
 
 export default class Material extends BaseModel {
@@ -23,4 +25,9 @@ export default class Material extends BaseModel {
 
   @column()
   declare type: string | null;
+
+  @manyToMany(() => Printer, {
+    pivotTable: 'material_printer',
+  })
+  declare printers: ManyToMany<typeof Printer>;
 }
