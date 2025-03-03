@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer'
 import Material from '#models/material/material'
 import Printer from '#models/printer/printer'
+import { env } from 'node:process'
 
 interface QuoteData {
     printerId: string
@@ -25,7 +26,19 @@ export default class QuoteService {
     })
     const totalCost = quoteDatas.reduce((sum, data) => sum + data.totalCost, 0)
 
-    const browser = await puppeteer.launch()
+    let browser;
+    if(env.NODE_ENV === 'production') {
+      browser = await puppeteer.launch({
+        headless: true,
+        defaultViewport: null,
+        executablePath: '/usr/bin/google-chrome',
+        args: ['--no-sandbox'],
+      });
+    }
+    else {
+      browser = await puppeteer.launch();
+    }
+
     const page = await browser.newPage()
 
     const htmlContent = `
