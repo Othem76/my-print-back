@@ -4,54 +4,66 @@ import app from "@adonisjs/core/services/app";
 import { FILE_UPLOAD_DIRECTORY } from "../utils/consts.js";
 import { Cost } from "#models/cost/cost";
 import { CostSetting } from "#interfaces/cost/costSetting";
+import { PrintSetting } from "#interfaces/cost/printSettings";
+import PrinterService from "./printerService.js";
+import { inject } from "@adonisjs/core";
 
+@inject()
 export default class CostService {
-  // TODO: a mettre en base de données
-  materialPrices: { [key: string]: number } = {
-    "ABS X130 apple green": 0.2245,
-    "ABS X130 Blue": 0.2245,
-    "ABS X130 red": 0.2245,
-    "ABS X130 yellow": 0.2245,
-    "TPU92": 0.2712,
-    "Innofil ABS Fusion + Naturel Ø 1,75 mm": 0.078,
-    "Innofil ABS Silver Ø 1,75 mm": 0.0404,
-    "Innofil ASA Ø 1,75 mm": 0.0553,
-    "Innofil EPR PET White Ø 1,75 mm": 0.046,
-    "Innofil PLA BLACK Ø 1,75 mm": 0.044,
-    "Innofil PLA WHITE Ø 1,75 mm": 0.044,
-    "Innofil PLA YELLOW Ø 1,75 mm": 0.0413,
-    "Innofil PP White Ø 1,75 mm": 0.0743,
-    "Innoflex 45 Black Ø 1,75 mm": 0.076,
-    "MODELE ABS PLUS ivoire": 0.4277,
-    "MODELE AGILUS": 0.45,
-    "MODELE DURUS": 0.4,
-    "MODELE TANGOBLACKPLUS": 0.45,
-    "MODELE TANGOGREY": 0.45,
-    "MODELE VERO CYAN": 0.34,
-    "MODELE VERO MAGENTA": 0.34,
-    "MODELE VERO YELLOW": 0.34,
-    "MODELE VEROWHITE PLUS RGD835": 0.2583,
-    "Renkforce PLA Blue Ø 1,75 mm": 0.034,
-    "Renkforce PLA RED Ø 1,75 mm": 0.034,
-    "SUPPORT FULLCURE 705": 0.1347,
-    "SUPPORT PS400": 0.4277,
-    "Verbatim PLA GREEN Ø 1,75 mm": 0.031,
-    "Ultimaker PLA WHITE Ø 2,85 mm": 0.044,
-    "Ultimaker PLA RED Ø 2,85 mm": 0.044,
-    "Ultimaker PLA BLUE Ø 2,85 mm": 0.0413,
-    "Ultimaker PLA GREEN Ø 2,85 mm": 0.034,
-    "Generic PLA": 0.027,
-  };
+  constructor(private readonly printerService: PrinterService) {}
 
-  getMaterialCost(materialPrice: number, weight: number) {
+  async calculateCosts(payloadList: PrintSetting[]): Promise<Map<string, Cost>> {
+    const costs = new Map<string, Cost>();
+
+    const promises = payloadList.map(async (payload) => {
+      if (!payload.materialId) {
+        throw new Error("Insert a material");
+      }
+
+      if (!payload.printerId) {
+        throw new Error("Invalid printer");
+      }
+
+      if (payload.support === undefined) {
+        throw new Error("Invalid support");
+      }
+
+      if (!payload.infill || payload.infill <= 0 || payload.infill > 100) {
+        throw new Error("Invalid infill");
+      }
+
+      if (!payload.layerHeight || payload.layerHeight < 100 || payload.layerHeight > 200) {
+        throw new Error("Invalid layer height");
+      }
+
+      const printer = await this.printerService.getPrinterById(payload.printerId);
+
+      const cost = await this.getCostsForFile(payload.fileId, {
+        fileId: payload.fileId,
+        printer: printer,
+        support: payload.support,
+        material: printer.materials.find((m) => m.id === payload.materialId)!,
+        layerHeight: payload.layerHeight / 100,
+        infill: payload.infill / 100,
+      });
+
+      costs.set(payload.fileId, cost);
+    });
+
+    await Promise.all(promises);
+
+    return costs;
+  }
+
+  private getMaterialCost(materialPrice: number, weight: number) {
     return (materialPrice * weight) / 1250;
   }
 
-  getElectricityCost(time: number, electricityCost: number) {
+  private getElectricityCost(time: number, electricityCost: number) {
     return (time / 3600) * electricityCost;
   }
 
-  getTotalCost(
+  private getTotalCost(
     materialCost: number,
     cleaningCost: number,
     electricityCost: number
@@ -61,7 +73,7 @@ export default class CostService {
     );
   }
 
-  async getCostsForFile(
+  private async getCostsForFile(
     filename: string,
     settings: CostSetting
   ): Promise<Cost> {
@@ -106,7 +118,7 @@ export default class CostService {
     };
   }
 
-  findUserFile(filename: string) {
+  private findUserFile(filename: string) {
     return fs.readFileSync(app.makePath(`${FILE_UPLOAD_DIRECTORY}/${filename}`));
   }
 }

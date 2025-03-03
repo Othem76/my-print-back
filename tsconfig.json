@@ -11,6 +11,7 @@
       "#services/*": ["app/services/*"],
       "#interfaces/*": ["app/interfaces/*"],
     },
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "moduleResolution": "NodeNext",
   }
 }

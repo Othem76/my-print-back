@@ -16,7 +16,6 @@ interface QuoteData {
 }
 
 export default class QuoteService {
-  constructor() {}
 
   async generatePdf(quoteDatas: QuoteData[]): Promise<Buffer> {
     const date = new Date().toLocaleDateString('fr-FR', {

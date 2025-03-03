@@ -1,12 +1,9 @@
-import { inject } from "@adonisjs/core";
 import { CuraWASM } from "cura-wasm";
 import { resolveDefinition } from "cura-wasm-definitions";
 import CuraResponse, { convertToArrayBuffer } from "../utils/curaUtils.js";
 //import { printers } from "cura-wasm-definitions/src/definitions/index.js";
 
-@inject()
 export default class CuraService {
-  constructor() {}
 
   async slice(
     machine: string,
@@ -15,9 +12,6 @@ export default class CuraService {
     layerHeight: number,
     infill: number
   ): Promise<CuraResponse> {
-    // if (!Object.keys(printers).includes(machine)) {
-    //   throw new Error(`Machine ${machine} not found`);
-    // }
 
     const settings = [
       {

@@ -5,9 +5,7 @@ import MaterialDto from "#models/material/dto/materialDto";
 
 @inject()
 export default class MaterialService {
-  constructor(
-    private readonly repository: MaterialRepository,
-  ) {}
+  constructor(private readonly repository: MaterialRepository) {}
 
   async getAllMaterials(): Promise<Material[]> {
     return await this.repository.getAllMaterials();
