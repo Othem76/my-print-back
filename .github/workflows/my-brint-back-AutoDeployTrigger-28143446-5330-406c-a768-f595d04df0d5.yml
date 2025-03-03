@@ -1,0 +1,48 @@
+name: Trigger auto deployment for my-brint-back
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/my-brint-back-AutoDeployTrigger-28143446-5330-406c-a768-f595d04df0d5.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.MYBRINTBACK_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.MYBRINTBACK_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.MYBRINTBACK_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}
+          _dockerfilePathKey_: _dockerfilePath_
+          registryUrl: ghcr.io/othem76
+          registryUsername: ${{ secrets.MYBRINTBACK_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.MYBRINTBACK_REGISTRY_PASSWORD }}
+          containerAppName: my-brint-back
+          resourceGroup: RG-MY-PRINT
+          imageToBuild: ghcr.io/othem76/my-brint-back:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
