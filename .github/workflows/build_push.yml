@@ -3,7 +3,7 @@ name: Deploy API & Database to GitHub Container Registry
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   build-and-push-db:
