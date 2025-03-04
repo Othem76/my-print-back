@@ -4,11 +4,11 @@ import MaterialRepositoryInterface from "#repositoriesInterface/materialReposito
 
 export default class MaterialRepository implements MaterialRepositoryInterface {
   async getAllMaterials(): Promise<Material[]> {
-    return await Material.all();
+    return await Material.query().preload('printers');
   }
 
   async getMaterialById(materialId: string): Promise<Material> {
-    return await Material.findOrFail(materialId);
+    return await Material.query().where({ id: materialId }).preload('printers').firstOrFail();
   }
 
   async createMaterial(materialData: MaterialDto): Promise<Material> {
