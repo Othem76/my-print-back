@@ -13,7 +13,7 @@ export default class extends BaseSchema {
       table.float("width").notNullable();
       table.float("length").notNullable();
       table.float("height").notNullable();
-      table.integer("cleaning_cost").notNullable();
+      table.float("cleaning_cost").notNullable();
       table.float("impressing_cost").notNullable();
     });
   }
