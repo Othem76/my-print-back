@@ -20,7 +20,7 @@ export default class StlController {
    */
   async uploadMany({ auth, request, response }: HttpContext) {
     const files: MultipartFile[] = request.files('stlFiles', {
-      extnames: ['stl'],
+      extnames: ['stl']
     })
 
     if (files.length === 0) {

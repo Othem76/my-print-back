@@ -19,11 +19,24 @@ interface QuoteData {
 export default class QuoteService {
 
   async generatePdf(quoteDatas: QuoteData[]): Promise<Buffer> {
-    const date = new Date().toLocaleDateString('fr-FR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
+
+    const now = new Date();
+
+    const date = now.toLocaleDateString('fr-FR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     })
+
+
+  const formattedDate =
+    now.getFullYear().toString() +
+    (now.getMonth() + 1).toString().padStart(2, '0') +
+    now.getDate().toString().padStart(2, '0') +
+    now.getHours().toString().padStart(2, '0') +
+    now.getMinutes().toString().padStart(2, '0') +
+    now.getSeconds().toString().padStart(2, '0');
+
     const totalCost = quoteDatas.reduce((sum, data) => sum + data.totalCost, 0)
 
     let browser;
@@ -47,7 +60,7 @@ export default class QuoteService {
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Devis N°${date}</title>
+        <title>Devis N°${formattedDate}</title>
         <style>
           body {
             font-family: Arial, sans-serif;
@@ -97,16 +110,14 @@ export default class QuoteService {
       <body>
         <div class="container">
           <div class="header">
-            <h1>Devis N°2</h1>
+            <h1>Devis N°${formattedDate}</h1>
             <p>JUNIA / Fablab</p>
-            <p>5 Rue Norbert Segard, 59800 Lille</p>
-            <p>Siret : <span>&lt;à compléter&gt;</span> | N° TVA : <span>&lt;à compléter&gt;</span></p>
-            <p>Tél : <span>&lt;à compléter&gt;</span></p>
+            <p><a href="https://www.junia.com/">www.junia.com</a></p>
           </div>
 
           <div class="details">
-            <p>41 Bd Vauban, 59800 Lille</p>
-            <p>Siret : <span>&lt;à compléter&gt;</span> | Tél : <span>&lt;à compléter&gt;</span></p>
+            <p>13 rue de Toul, 59046 Lille</p>
+            <p>Tél : 03.28.38.48.58</p>
           </div>
 
 
@@ -157,7 +168,7 @@ export default class QuoteService {
               <tbody>
                 <tr>
                   <th>Total HT</th>
-                  <td>${(totalCost * 0.80).toFixed(2)} €</td>
+                  <td>${totalCost.toFixed(2)} €</td>
                 </tr>
                 <tr>
                   <th>TVA (20%)</th>
@@ -165,7 +176,7 @@ export default class QuoteService {
                 </tr>
                 <tr>
                   <th>Total TTC</th>
-                  <td>${totalCost.toFixed(2)} €</td>
+                  <td>${(totalCost + totalCost * 0.20).toFixed(2)} €</td>
                 </tr>
               </tbody>
             </table>
