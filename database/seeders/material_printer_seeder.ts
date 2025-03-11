@@ -14,7 +14,7 @@ export default class MaterialPrinterSeeder extends BaseSeeder {
           width: 230,
           length: 190,
           height: 200,
-          cleaningCost: 2,
+          cleaningCost: 0.2499,
           impressingCost: 0.03822
         },
         {

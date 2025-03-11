@@ -154,8 +154,8 @@ export default class QuoteService {
                   <td>Préparation et post-traitement</td>
                   <td>1</td>
                   <td>-</td>
-                  <td>${data.cleaningCost.toFixed(2)} €</td>
-                  <td>${data.cleaningCost.toFixed(2)} €</td>
+                  <td>${data.cleaningCost} €</td>
+                  <td>${data.cleaningCost} €</td>
                 </tr>
               </tbody>
             </table>
