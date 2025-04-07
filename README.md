@@ -25,10 +25,19 @@ $ docker-compose up -d
 
 Lors de l'exécution du docker-compose, la base de données va être peuplé avec les données présentes dans les seeders.
 
+### Lancer l'API en ligne de commande
+
+Pour lancer l'API en ligne de commande sans utiliser Docker, il suffit d'utiliser la commande :
+
+```bash
+$ npm run dev
+```
+
+=> A noter : sans l'initialisation de la base de données (via le docker-compose), vous ne pourrez pas effectuer d'actions sur l'API depuis le frontend car les routes sont protégées par un token d'authentification, qui est automatiquement récupéré lors de la connexion de l'utilisateur.
+
 ### Information API
 
 - Port de l'API: 3333
 
 # Contact pour toutes questions concernant le projet :
-- Développeurs : t.mouisse@gmail.com
 - Encadrant    : michael.meul@junia.com
