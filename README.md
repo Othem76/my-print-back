@@ -29,6 +29,12 @@ Lors de l'exécution du docker-compose, la base de données va être peuplé ave
 
 ### Lancer l'API en ligne de commande
 
+Pensez d'abord à installer les packages node :
+
+```bash
+$ npm install
+```
+
 Pour lancer l'API en ligne de commande sans utiliser Docker, il suffit d'utiliser la commande :
 
 ```bash
